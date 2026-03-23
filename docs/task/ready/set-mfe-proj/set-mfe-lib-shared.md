@@ -4,7 +4,7 @@ displayed_sidebar: "taskDocSidebar"
 title: "mfe-lib-shared 환경구성"
 ---
 
-# mf-lib-shared 환경구성
+# mfe-lib-shared 환경구성
 **@nic/mfe-lib-shared** 는 Micro Frontend 프로젝트에서 공통으로 사용되는 라이브러리를 제공하는 **공유 라이브러리 패키지** 입니다.
 
 
@@ -42,19 +42,19 @@ title: "mfe-lib-shared 환경구성"
     - TypeScript의 강력한 타입 체킹 활용
 
 * 공통 라이브러리 사용 방식
-  - 모노레포 환경에서는 워크스페이스 기능을 통해 공통 라이브러리를 참조합니다:
+  - 멀티레포 환경에서는 npm 레지스트리(또는 사설 레지스트리)에 패키지를 배포한 뒤, 각 레포지토리에서 패키지를 설치하여 참조합니다:
 
 ```json
 // Host 또는 Remote 앱의 package.json
-{ "dependencies": { "@nic/mf-lib-shared": "file:../mf-lib-shared" } }
-// 또는 npm install @nic/mf-lib-shared 과 같이 설치하여 사용.
+{ "dependencies": { "@nic/mfe-lib-shared": "^1.0.0" } }
+// npm install @nic/mfe-lib-shared 명령으로 설치하여 사용.
 ```
 
 ```tsx
 // 실제 사용 예시
-import { Button, Card, Input, Badge, cn } from '@nic/mf-lib-shared/components';
-import { formatDate, validateEmail } from '@nic/mf-lib-shared/utils';
-import type { User, ApiResponse } from '@nic/mf-lib-shared/types';
+import { Button, Card, Input, Badge, cn } from '@nic/mfe-lib-shared/components';
+import { formatDate, validateEmail } from '@nic/mfe-lib-shared/utils';
+import type { User, ApiResponse } from '@nic/mfe-lib-shared/types';
 
 function UserProfile() {
   const user: User = { /* ... */ };
@@ -71,27 +71,202 @@ function UserProfile() {
 :::
 
 
-### 1. 패키지 생성
+## 1. 패키지 생성
+---
+* `mfe-lib-shared` 공유 라이브러리 패키지 프로젝트를 **Vite** 프로젝트로 생성합니다.
 ```sh
-mkdir mf-lib-shared
-cd mf-lib-shared
-# -y 모든 설정을 default로 진행
-npm init -y
+# mfe-lib-shared 폴더 안에서 실행
+# 현재 폴더에 바로 생성하려면 . 사용
+npm create vite@latest . -- --template react-ts
+```
+![공유 라이브러리 패키지 최초 Vite 설치 예시시](../../assets/ready/mfe-lib-shared/install-vite01.png)
+
+* 생성된 프로젝트에서 `package.json` 파일의 패키지 이름을 변경합니다.
+```json
+{
+  "name": "@nic/mfe-lib-shared",
+  ...
+
+```
+
+* 생성된 폴더구조
+  ```sh
+  @nic/mfe-lib-shared/
+  ├─public              # 정적 파일 (favicon 등)
+  ├─src                 # 소스 코드 루트
+  ├─.gitignore          # Git 추적 제외 파일 목록
+  ├─eslint.config.js    # ESLint 설정 파일
+  ├─index.html          # Vite 진입점 HTML
+  ├─package.json        # 패키지 메타데이터 및 의존성 정의
+  ├─README.md           # 프로젝트 설명 문서
+  ├─tsconfig.app.json   # 앱 소스 코드용 TypeScript 설정
+  ├─tsconfig.json       # TypeScript 기본 설정 (루트)
+  ├─tsconfig.node.json  # Node.js 환경(vite.config 등)용 TypeScript 설정
+  └─vite.config.ts      # Vite 빌드 및 개발 서버 설정
+  ```
+* 불필요한 앱 파일 정리
+Vite가 만든 파일 중 라이브러리에 불필요한 것들을 제거합니다.
+  ```sh
+  삭제: index.html
+  삭제: src/App.tsx
+  삭제: src/App.css
+  삭제: src/main.tsx
+  삭제: src/assets/
+  삭제: public/
+  ```
+* `npm install` 명령어를 실행하여 의존성 라이브러리를 설치합니다.
+  ```sh
+  # npm install 을 실행하면 node_modules 폴더가 생성됩니다.
+  npm install
+  ```
+
+
+
+
+
+
+
+
+
+
+
+## 2. Shadcn UI 컴포넌트 설치를 위한 세팅
+---
+* **mfe-lib-shared** 패키지는 기본 UI 컴포넌트 제공용으로 [Shadcn UI](https://ui.shadcn.com/)를 사용합니다.  
+* Shadcn UI 컴포넌트를 설치하고 하나의 폴더에서 관리하기 위하여 다음과 같이 세팅을 진행합니다.
+  - Shadcn UI 관련 파일은 모두 `src/components/shadcn` 폴더에서 관리합니다.
+
+
+### Tailwind CSS 설치
+```sh
+# Tailwind CSS 설치
+npm install -D tailwindcss @tailwindcss/vite
 ```
 
 
-### 2. 디렉토리 구조 생성 (기본구조)
+### vite.config.ts 수정
+* Tailwind CSS 플러그인을 추가하고, alias를 설정합니다.
+  ```ts
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  // highlight-start
+  import tailwindcss from '@tailwindcss/vite'
+  import { resolve } from 'path'
+  // highlight-end
+
+  // https://vite.dev/config/
+  export default defineConfig({
+    // highlight-start
+    plugins: [react(), tailwindcss(),],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
+      },
+    },
+    // highlight-end
+  })
+  ```
+
+
+### `tsconfig.json`, `tsconfig.app.json`에 alias 추가
+* compilerOptions 안에 두 줄 추가:
+  ```json
+  // tsconfig.json
+  {
+    // highlight-start
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    },
+    // highlight-end
+    "files": [],
+    "references": [
+      { "path": "./tsconfig.app.json" },
+      { "path": "./tsconfig.node.json" }
+    ]
+  }
+  ```
+  ```json
+  // tsconfig.app.json
+  {
+    "compilerOptions": {
+      // highlight-start
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+      // highlight-end
+      // ... 기존 설정들 그대로 유지
+    }
+  }
+  ```
+
+
+### `src/styles/globals.css` 생성
+```css
+@import "tailwindcss";
+```
+
+
+### 프로젝트 루트에 `components.json` 수동 생성 (shadcn 경로 커스터마이징)
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components/shadcn/ui",
+    "utils": "@/components/shadcn/lib/utils",
+    "ui": "@/components/shadcn/ui",
+    "lib": "@/components/shadcn/lib",
+    "hooks": "@/components/shadcn/hooks"
+  }
+}
+```
+
+
+### shadcn 설치 실행
 ```sh
-mf-lib-shared/src/
+npx shadcn@latest init
+```
+![shadcn 설치 예시](../../assets/ready/mfe-lib-shared/install-vite02.png)
+
+
+### UI 컴포넌트 설치
+* 이제부터 각 UI 컴포넌트를 다음과 같이 설치하여 사용할 수 있습니다.
+```sh
+npx shadcn@latest add button   // button 컴포넌트 설치
+npx shadcn@latest add input    // input 컴포넌트 설치
+npx shadcn@latest add dialog   // dialog 컴포넌트 설치
+npx shadcn@latest add dropdown // dropdown 컴포넌트 설치
+npx shadcn@latest add menu     // menu 컴포넌트 설치
+npx shadcn@latest add popover  // popover 컴포넌트 설치
+npx shadcn@latest add tooltip  // tooltip 컴포넌트 설치
+npx shadcn@latest add dropdown-menu // dropdown-menu 컴포넌트 설치
+npx shadcn@latest add dropdown-item // dropdown-item 컴포넌트 설치
+npx shadcn@latest add dropdown-menu-item // dropdown-menu-item 컴포넌트 설치
+```
+
+
+### 최종 디렉토리 구조 예시
+```sh
+@nic/mfe-lib-shared/src/
 ├─components          # 공통 컴포넌트
 │  ├─shadcn              # Shadcn UI 컴포넌트
-│  │  ├─components
-│  │  │  └─ui            # Shadcn UI 컴포넌트 목록
-│  │  │     ├─button
-│  │  │     └─...             
+│  │  ├─ui               # Shadcn UI 컴포넌트 목록            
+│  │  │  ├─button
+│  │  │  └─...             
 │  │  └─lib
-│  │     └─utils         # shadcn utils
-│  │        └─index.ts        
+│  │     └─utils.ts      # shadcn utils       
 │  ├─providers
 │  └─...
 ├─config              # 공통 설정
@@ -107,6 +282,81 @@ mf-lib-shared/src/
 :::
 
 
+
+
+
+
+
+
+## 3. 라이브러리 배포를 위한 설정
+---
+* `vite.config.ts` 파일을 수정하여 라이브러리 배포를 위한 설정을 합니다.
+  ```ts
+  import dts from 'vite-plugin-dts'
+  // npm install -D vite-plugin-dts 먼저 설치
+  export default defineConfig({
+    plugins: [
+      react(),
+      tailwindcss(),
+      dts({ include: ['src'], insertTypesEntry: true }),
+    ],
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/index.ts'),
+        formats: ['es', 'cjs'],
+        fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      },
+      rollupOptions: {
+        external: ['react', 'react-dom', 'react/jsx-runtime'],
+      },
+      cssCodeSplit: false,
+    },
+  })
+  ```
+* `package.json` 파일을 수정하여 라이브러리 배포를 위한 설정을 합니다.
+  ```json
+  {
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      },
+      "./styles": "./dist/style.css"
+    }
+  }
+  ```
+* 외부에 노출하는 진입점 파일(src/index.ts)을을 직접 만들어야 합니다.
+  - `src/index.ts` 파일 생성
+  ```ts
+  // ── Shadcn 컴포넌트 ──
+  export { Button, buttonVariants } from './components/shadcn/ui/button'
+  // ── 유틸리티 ──
+  export { cn } from './components/shadcn/lib/utils'
+  // ── 직접 만든 공통 컴포넌트 (추후 추가) ──
+  // export { CustomModal } from './components/Modal'
+  ```
+* 실제 빌드해보기
+  `npm run build` 명령어를 통해 빌드를 실행해 봅니다. 빌드 결과물은 `dist` 폴더에 생성됩니다.
+  ```sh
+  npm run build
+  ```
+  ![빌드 예시](../../assets/ready/mfe-lib-shared/install-vite03.png)
+
+
+
+
+
+
+## 4. 최종
+---
+* 현재까지 진행한 내용은 기본 패키지 구성 세팅 내용입니다. 프로젝트 공유 라이브러리 요구사항에 따라 추가적인 세팅이 필요할 수 있고 구조 또한 변경이 될 수도 있습니다.
+
+
+---
 ### 3. package.json 설정 (구조 수정 필요, 추후 수정 예정)
 ```json
 {
