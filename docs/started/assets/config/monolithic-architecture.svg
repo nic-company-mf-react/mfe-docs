@@ -1,0 +1,44 @@
+<svg width="700" height="330" viewBox="0 0 700 330" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="330" fill="#F8FAFC"/>
+  
+  <!-- Git Repository Container -->
+  <rect x="50" y="40" width="600" height="260" rx="16" fill="#FFFFFF" stroke="#64748B" stroke-width="3" stroke-dasharray="8 4"/>
+  
+  <!-- Git Icon and Title -->
+  <circle cx="90" cy="70" r="18" fill="#F05032" stroke="#C13921" stroke-width="2"/>
+  <path d="M 84 70 L 90 64 L 96 70 L 90 76 Z" fill="#FFFFFF"/>
+  
+  <text x="115" y="78" font-size="18" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Single Git Repository</text>
+  
+  <!-- Main Application Box -->
+  <rect x="100" y="110" width="500" height="175" rx="12" fill="#EFF6FF" stroke="#3B82F6" stroke-width="3"/>
+  
+  <text x="350" y="140" font-size="20" font-family="Arial, sans-serif" fill="#1E40AF" font-weight="bold" text-anchor="middle">Monolithic Application</text>
+  
+  <!-- Features/Modules Grid -->
+  <g>
+    <!-- Row 1 -->
+    <rect x="130" y="155" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="200" y="185" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">User Auth</text>
+    
+    <rect x="290" y="155" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="360" y="185" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">Product</text>
+    
+    <rect x="450" y="155" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="520" y="185" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">Order</text>
+    
+    <!-- Row 2 -->
+    <rect x="130" y="220" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="200" y="250" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">Payment</text>
+    
+    <rect x="290" y="220" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="360" y="250" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">Dashboard</text>
+    
+    <rect x="450" y="220" width="140" height="50" rx="8" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
+    <text x="520" y="250" font-size="14" font-family="Arial, sans-serif" fill="#1E3A8A" font-weight="600" text-anchor="middle">Report</text>
+  </g>
+  
+  <!-- Single Build & Deploy annotation -->
+  <rect x="220" y="305" width="260" height="20" rx="4" fill="#3B82F6"/>
+  <text x="350" y="319" font-size="14" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="bold" text-anchor="middle">Single Build &amp; Deploy</text>
+</svg>

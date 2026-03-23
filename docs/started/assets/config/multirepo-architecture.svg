@@ -1,0 +1,116 @@
+<svg width="900" height="620" viewBox="0 0 900 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="620" fill="#F8FAFC"/>
+  
+  <!-- Arrows marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748B" />
+    </marker>
+  </defs>
+  
+  <!-- Arrows from remotes to host (drawn first) -->
+  <path d="M 195 190 Q 195 215 340 240" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  <path d="M 450 190 Q 450 215 450 240" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  <path d="M 705 190 Q 705 215 560 240" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  <path d="M 195 480 Q 195 420 350 365" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  <path d="M 450 480 Q 450 420 450 365" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  <path d="M 705 480 Q 705 420 550 365" stroke="#64748B" stroke-width="2.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5 3"/>
+  
+  <!-- Remote Repository 1 (User Auth) -->
+  <rect x="80" y="30" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="110" cy="55" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 105 55 L 110 50 L 115 55 L 110 60 Z" fill="#FFFFFF"/>
+  
+  <text x="130" y="62" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">User Auth Repository</text>
+  
+  <rect x="100" y="80" width="190" height="90" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="195" y="105" font-size="15" font-family="Arial, sans-serif" fill="#1E40AF" font-weight="bold" text-anchor="middle">User Auth</text>
+  <text x="195" y="125" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="130" y="140" width="130" height="18" rx="3" fill="#3B82F6"/>
+  <text x="195" y="152" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Remote Repository 2 (Product) -->
+  <rect x="335" y="30" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="365" cy="55" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 360 55 L 365 50 L 370 55 L 365 60 Z" fill="#FFFFFF"/>
+  
+  <text x="385" y="62" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Product Repository</text>
+  
+  <rect x="355" y="80" width="190" height="90" rx="8" fill="#F0FDF4" stroke="#22C55E" stroke-width="2"/>
+  <text x="450" y="105" font-size="15" font-family="Arial, sans-serif" fill="#15803D" font-weight="bold" text-anchor="middle">Product</text>
+  <text x="450" y="125" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="385" y="140" width="130" height="18" rx="3" fill="#22C55E"/>
+  <text x="450" y="152" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Remote Repository 3 (Order) -->
+  <rect x="590" y="30" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="620" cy="55" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 615 55 L 620 50 L 625 55 L 620 60 Z" fill="#FFFFFF"/>
+  
+  <text x="640" y="62" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Order Repository</text>
+  
+  <rect x="610" y="80" width="190" height="90" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="705" y="105" font-size="15" font-family="Arial, sans-serif" fill="#92400E" font-weight="bold" text-anchor="middle">Order</text>
+  <text x="705" y="125" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="640" y="140" width="130" height="18" rx="3" fill="#F59E0B"/>
+  <text x="705" y="152" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Remote Repository 4 (Payment) -->
+  <rect x="80" y="430" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="110" cy="455" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 105 455 L 110 450 L 115 455 L 110 460 Z" fill="#FFFFFF"/>
+  
+  <text x="130" y="462" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Payment Repository</text>
+  
+  <rect x="100" y="480" width="190" height="90" rx="8" fill="#FDF4FF" stroke="#A855F7" stroke-width="2"/>
+  <text x="195" y="505" font-size="15" font-family="Arial, sans-serif" fill="#6B21A8" font-weight="bold" text-anchor="middle">Payment</text>
+  <text x="195" y="525" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="130" y="540" width="130" height="18" rx="3" fill="#A855F7"/>
+  <text x="195" y="552" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Remote Repository 5 (Dashboard) -->
+  <rect x="335" y="430" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="365" cy="455" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 360 455 L 365 450 L 370 455 L 365 460 Z" fill="#FFFFFF"/>
+  
+  <text x="385" y="462" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Dashboard Repository</text>
+  
+  <rect x="355" y="480" width="190" height="90" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="450" y="505" font-size="15" font-family="Arial, sans-serif" fill="#991B1B" font-weight="bold" text-anchor="middle">Dashboard</text>
+  <text x="450" y="525" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="385" y="540" width="130" height="18" rx="3" fill="#EF4444"/>
+  <text x="450" y="552" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Remote Repository 6 (Report) -->
+  <rect x="590" y="430" width="230" height="160" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="2.5" stroke-dasharray="6 3"/>
+  
+  <circle cx="620" cy="455" r="14" fill="#F05032" stroke="#C13921" stroke-width="1.5"/>
+  <path d="M 615 455 L 620 450 L 625 455 L 620 460 Z" fill="#FFFFFF"/>
+  
+  <text x="640" y="462" font-size="13" font-family="Arial, sans-serif" fill="#475569" font-weight="bold">Report Repository</text>
+  
+  <rect x="610" y="480" width="190" height="90" rx="8" fill="#ECFEFF" stroke="#06B6D4" stroke-width="2"/>
+  <text x="705" y="505" font-size="15" font-family="Arial, sans-serif" fill="#164E63" font-weight="bold" text-anchor="middle">Report</text>
+  <text x="705" y="525" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Remote Service</text>
+  <rect x="640" y="540" width="130" height="18" rx="3" fill="#06B6D4"/>
+  <text x="705" y="552" font-size="11" font-family="Arial, sans-serif" fill="#FFFFFF" font-weight="600" text-anchor="middle">Build &amp; Deploy</text>
+  
+  <!-- Host Repository (drawn last as a group so it appears on top) -->
+  <g id="host-repository">
+    <rect x="310" y="240" width="280" height="125" rx="14" fill="#FFFFFF" stroke="#7C3AED" stroke-width="4"/>
+    
+    <circle cx="350" cy="268" r="16" fill="#F05032" stroke="#C13921" stroke-width="2"/>
+    <path d="M 344 268 L 350 262 L 356 268 L 350 274 Z" fill="#FFFFFF"/>
+    
+    <text x="375" y="276" font-size="17" font-family="Arial, sans-serif" fill="#5B21B6" font-weight="bold">Host Repository</text>
+    
+    <rect x="335" y="300" width="230" height="48" rx="8" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/>
+    <text x="450" y="320" font-size="15" font-family="Arial, sans-serif" fill="#5B21B6" font-weight="bold" text-anchor="middle">Main Application</text>
+    <text x="450" y="338" font-size="11" font-family="Arial, sans-serif" fill="#64748B" text-anchor="middle">Integrates all remote services</text>
+  </g>
+</svg>
