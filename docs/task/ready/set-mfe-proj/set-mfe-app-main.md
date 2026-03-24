@@ -4,7 +4,7 @@ displayed_sidebar: "taskDocSidebar"
 title: "mfe-app-main 환경구성"
 ---
 
-# mfe-app-main(Host 앱앱) 환경구성
+# mfe-app-main(Host 앱) 환경구성
 
 
 ## create-next-app 실행
