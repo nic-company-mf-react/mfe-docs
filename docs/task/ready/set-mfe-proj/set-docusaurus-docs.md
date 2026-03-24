@@ -6,6 +6,8 @@ title: "Docs(Docusaurus) 환경구성"
 
 # Docs(Docusaurus)환경구성
 
+개발자 가이드 문서 사이트는 **Docusaurus** 프로젝트를 활용하여 구성되었습니다.
+따라서 추후 최초 문서 사이트 구성 시 **Docusaurus** 프로젝트 설치 및 환경구성 방법을 안내합니다.
 
 
 
@@ -14,7 +16,8 @@ title: "Docs(Docusaurus) 환경구성"
 * [Node.js](https://nodejs.org/en/download/) 18.0 이상 버전 설치 필요.
 
 ### Docusaurus 설치
-작업할 폴더에서 다음 명령어를 실행하면 `mf-docs`라는 이름의 폴더가 생성되며, docusaurus 프로젝트의 기본 파일이 생성 됩니다.
+작업할 폴더에서 다음 명령어를 실행하면 `mf-docs`라는 이름의 폴더가 생성되며, docusaurus 프로젝트의 기본 파일이 생성 됩니다.  
+프로젝트 이름은 자유롭게 설정할 수 있습니다.
 ```sh
 npx create-docusaurus@latest mf-docs classic
 ```
