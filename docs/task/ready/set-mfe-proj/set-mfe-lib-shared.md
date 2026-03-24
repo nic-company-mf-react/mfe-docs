@@ -2111,9 +2111,12 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      // 순서가 중요. 더 구체적인 경로가 더 높은 우선순위를 가짐
+      '@nic/mfe-lib-shared/components/ui': path.resolve(__dirname, '../../src/components/shadcn/ui/index.ts'),
+      '@nic/mfe-lib-shared/components': path.resolve(__dirname, '../../src/components/index.ts'),
+      '@nic/mfe-lib-shared/styles': path.resolve(__dirname, '../../src/styles/index.css'), // CSS 서브패스 전용
       // HMR을 위해 빌드된 dist가 아닌 라이브러리 src를 직접 참조
       '@nic/mfe-lib-shared': path.resolve(__dirname, '../../src/index.ts'),
-      // 공유라이브러리를 직접참조했으므로 공유라이브러리 내부에서 @ 경로를 사용할 수 있도록 설정
       '@': path.resolve(__dirname, '../../src'),
     },
   },
@@ -2132,7 +2135,11 @@ export default defineConfig({
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@nic/mfe-lib-shared": ["../../src/index.ts"]
+      "@nic/mfe-lib-shared": ["../../src/index.ts"],
+      "@nic/mfe-lib-shared/components": ["../../src/components/index.ts"],
+      "@nic/mfe-lib-shared/components/ui": ["../../src/components/shadcn/ui/index.ts"],
+      "@nic/mfe-lib-shared/styles": ["../../src/styles/index.css"],
+      "@/*": ["../../src/*"] 
     }
   },
   "include": ["src"]
@@ -2143,7 +2150,7 @@ export default defineConfig({
 ```tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import '../../../src/styles/globals.css'; // 공유라이브러리 글로벌 스타일
+import './styles/app.css';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -2202,7 +2209,7 @@ export default function App() {
 ### 8. `packages/playground/src/pages/ui-component/ButtonPage.tsx` 생성
 ```tsx
 import type { ReactNode } from 'react';
-import { Button } from '@nic/mfe-lib-shared';
+import { Button } from '@nic/mfe-lib-shared/components';
 // 리모트 앱에서 사용하는 실제 import 경로와 동일
 
 export default function ButtonPage(): ReactNode {
@@ -2233,7 +2240,25 @@ export default function ButtonPage(): ReactNode {
 ```
 
 
-### 10. playground 실행
+### 10. 루트 스타일 `packages/playground/src/styles/app.css` 생성
+```css
+/* 레이아웃 폰트 추가(다른 CSS규칙보다 더 앞에 위치해야 함) */
+/*@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap') layer(base);*/
+/* Tailwind 엔진 - 각 앱의 빌드 파이프라인에 속하므로 여기에 유지 */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+/* 폰트 - 공유 라이브러리로 옮겨도 되지만 앱에 두는 것도 무방 */
+/*@import '@fontsource-variable/inter';*/
+
+/* 공유 라이브러리에서 디자인 토큰 + 베이스 스타일 */
+@import '@nic/mfe-lib-shared/styles';
+```
+
+
+
+### 11. playground 실행
   ```sh
   npm run dev
   ```
