@@ -2267,7 +2267,7 @@ export default function ButtonPage(): ReactNode {
 ![playground 실행 예시](../../assets/ready/mfe-lib-shared/shared-playground01.png)
 
 
-### 11. playground에 특정 라이브러리 패키지 설치하는 법
+### 12. playground에 특정 라이브러리 패키지 설치하는 법
 * 프로젝트 루트에서 
   ```sh
   npm install -D @types/node -w packages/playground
