@@ -289,120 +289,17 @@ export default defineConfig({
   // src/main.tsx
   import('./Bootstrap');
   ```
-
-
-
-
-
-
-
-- 최종 설치 완료된 프로젝트를 띄우기 위해 `npm run dev`명령어를 실행하여 로컬 서버를 띄웁니다.
-    - **port**를 변경하려면 `package.json`파일에서 포트 설정을 합니다.
-        ```json
-        {
-            "scripts": {
-                "dev": "next dev -p 5173"
-            }
+* **3.** 브라우저에서 확인
+  - `http://localhost:5173/` 에 접속하여 확인합니다.
+  - 상황에 따라 다음과 같이 port를 변경하여 띄울 수도 있습니다.
+    ```json
+    {
+        "scripts": {
+            "dev": "vite --port 5173",
         }
-        ```
-    - 또는 **cross-env** 패키지를 사용하여 포트 설정, 다음 명령어로 설치 후 `package.json`파일에 설정합니다.
-        ```sh
-        # cross-env 패키지 설치
-        npm install cross-env --save-dev
-        ```
-        ```json
-        {
-            "scripts": {
-                "dev": "cross-env PORT=5173 next dev"
-            }
-        }
-        ```
-        ![next 로컬 서버 띄우기 예시](../../assets/ready/set-mf-main02.png)
-        ![next 로컬 서버 띄우기 예시](../../assets/ready/set-mf-main03.png)
-
-
-
-
-
-
-
-
-
-
-## VSCode(Visual Studio Code) 설정
----
-
-### settings.json 셋팅 (VSCode 설정)
-
-<span class="react-color">Frontend (React)</span> 개발을 위해 **VSCode**를 활용할 것입니다. 따라서 개발자의 통일된 코드 작성을 위하여 **VSCode**의 환경설정을 **settings.json**파일에 적용합니다.
-
-#### settings.json 설정
-
-> - **settings.json 파일열기** : f1 ⤍ settings 입력 ⤍ Preferences: Open Workspace Settings (JSON) 클릭.  
->   위와같이 열면 프로젝트 루트에 **.vscode** 디렉토리가 생성되고 **settings.json**파일이 생성됩니다.
-> - **settings(설정)가 적용되는 우선 순위** : .vscode settings.json ⤇ settings.json ⤇ defaultSetting.json(<span class="text-color-red">수정하지 않는 파일.</span>)  
->   <span class="text-color-red">defaultSetting.json은 모든 설정내용이 다 들어있는 기본 설정 파일입니다. 수정은 하지 않는 파일입니다.</span>
-> - **.vscode** 디렉토리에 생성된 **settings.json** 파일에 아래 내용 입력합니다.
-
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false,
-  "editor.insertSpaces": false,
-  "editor.renderWhitespace": "all",
-  "editor.comments.insertSpace": false,
-  "files.associations": {
-    "*.json": "jsonc"
-  },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  "eslint.workingDirectories": [{ "mode": "auto" }],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.useFlatConfig": true,
-  "css.lint.unknownAtRules": "ignore",
-  "scss.lint.unknownAtRules": "ignore",
-  "less.lint.unknownAtRules": "ignore"
-}
-```
-
-:star: 이렇게 `settings.json` 파일로 **VSCode** 설정을 하면 **메뉴(File ⤍ Preferences ⤍ Settings)** 로 설정한것 보다 우선순위가 높게 적용됩니다.
-
-:::info 설명
-- **"editor.formatOnSave"** : 파일 저장 시 자동으로 코드 서식을 정리합니다.
-- **"editor.codeActionsOnSave" ⤍ "source.fixAll.eslint"** : 파일 저장 시 ESLint가 감지한 모든 문제를 자동으로 수정합니다.
-- **"editor.tabSize"** : 탭 크기를 몇칸으로 설정할지 지정합니다.
-- **"editor.detectIndentation"** : VSCode가 파일의 들여쓰기를 자동으로 감지하는 기능을 활용할지 여부 입니다.
-- **"editor.insertSpaces"** : 탭 키를 누를 때 공백 대신 탭 문자를 삽입합니다.
-- **"editor.renderWhitespace"** : 공백 문자를 시각적으로 표시합니다.
-- **"editor.comments.insertSpace"** : 주석 기호(//, /\*) 뒤에 자동으로 공백을 삽입할지 여부 입니다.
-- **"files.associations" ⤍ "\*.json": "jsonc"** : .json 파일을 jsonc(주석이 있는 JSON) 형식으로 인식하도록 설정합니다.
-- **"eslint.validate": \["javascript", "javascriptreact", "typescript", "typescriptreact"\]** : ESLint가 TypeScript, React, JavaScript 파일을 검사하도록 설정합니다.
-- **"eslint.workingDirectories"** : \[\{"mode":"auto"\}\] : ESLint 작업 디렉토리를 자동으로 감지하도록 설정합니다.
-- **"editor.defaultFormatter": "esbenp.prettier-vscode"** : VSCode의 기본 코드 포맷터로 Prettier를 사용합니다.
-- **"eslint.useFlatConfig"** : ESLint의 설정방식이 `v8.21.0` 부터 **Flat Config**를 지원하면서, 구성 형식을 **Flat Config**으로 할지 여부 설정.
-
-- **"css.lint.unknownAtRules": "ignore"** : VSCode에서 CSS의 "Unknown At Rules" 경고를 무시하도록 설정.
-- **"scss.lint.unknownAtRules": "ignore"** : VSCode에서 scss의 "Unknown At Rules" 경고를 무시하도록 설정.
-- **"less.lint.unknownAtRules": "ignore"** : VSCode에서 less의 "Unknown At Rules" 경고를 무시하도록 설정.
-:::
-
-:::tip <span class="admonition-title">Tailwind CSS</span>사용 시 다음 설정 적용.
-* **Tailwind CSS**의 @apply, @layer 등으로 인한 경고라면 위 설정(**css.lint.unknownAtRules : "ignore"**)으로 해결됩니다. 그리고 **Tailwind CSS IntelliSense** VSCode 확장(Extensions)을 설치하면 더 나은 지원을 받을 수 있습니다.
-:::
-
-:::tip <span class="admonition-title">ESLint</span> 설정방식에 대하여
-
-- **ESLint**가 `v8.21.0` 부터 새로운 구성방식인 플랫 구성(Flat Config) 시스템을 지원합니다. 기존 방식은 `.eslintrc` 파일을 이용한 구성 방식이었습니다.
-- `v9.0.0`부터는 기본 구성방식이 플랫 구성(Flat Config) 시스템으로 바뀌게 됩니다.
-:::
+    }
+    ```
+    ![메인 애플리케이션 브라우저 확인](../../assets/ready/mfe-app-main/create-app02.png)
 
 
 
@@ -414,13 +311,33 @@ export default defineConfig({
 ## 환경 변수 파일 구성
 ---
 Remote 앱 URL을 환경 변수로 관리한다.
+* `.env` — 환경 변수 파일(default)
 * `.env.local` — 로컬 개발용
 * `.env.development` — 개발 서버용
 * `.env.production` — 프로덕션용
 ```env
 # .env.local 예시
-NEXT_PUBLIC_REMOTE_REMOTE1_URL=http://localhost:5174
-NEXT_PUBLIC_REMOTE_REMOTE2_URL=http://localhost:5175
+# Host 앱 포트
+PORT=5000
+
+# Vite Base URL (default: /)
+VITE_BASE_URL=/
+
+# Vite Router Base Name (default: /)
+VITE_ROUTER_BASENAME=/
+
+# 외부 API 기본 URL (테스트용)
+VITE_EXTERNAL_API_BASE_URL1=https://koreanjson.com
+
+# remote1 dev server 직접 연결
+VITE_REMOTE_REMOTE1_URL=http://localhost:5001/remote1Entry.js
+# corporate dev server 직접 연결
+VITE_REMOTE_CORPORATE_URL=http://localhost:5002/corporateEntry.js
+# asset dev server 직접 연결
+VITE_REMOTE_ASSET_URL=http://localhost:5003/assetManagementEntry.js
+# retirement dev server 직접 연결
+VITE_REMOTE_RETIREMENT_URL=http://localhost:5004/retirementPensionEntry.js
+# 리모트 앱 계속 추가...
 ```
 
 
@@ -430,68 +347,37 @@ NEXT_PUBLIC_REMOTE_REMOTE2_URL=http://localhost:5175
 
 
 
-## next.config.ts - Multi Zones rewrites 설정
----
-Host 앱이 Remote 앱들의 요청을 프록시하도록 rewrites를 설정한다.  
-Remote 앱 각각은 basePath: '/blog'처럼 독립적인 basePath를 가져야 충돌이 없다.
-```tsx
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/blog",
-        destination: `${process.env.NEXT_PUBLIC_REMOTE_REMOTE1_URL}/blog`,
-      },
-      {
-        source: "/blog/:path*",
-        destination: `${process.env.NEXT_PUBLIC_REMOTE_REMOTE1_URL}/blog/:path*`,
-      },
-      // 다른 remote 앱 경로 추가...
-    ];
-  },
-};
-
-export default nextConfig;
-```
-
-
-
-
-
-
-
-## 공유 라이브러리(`@nic/mf-lib-shared`) 연동
+## 공유 라이브러리(`@company/mfe-lib-shared`) 연동 관련
 ---
 * 공유 라이브러리를 GitHub/GitLab 등에 올린 경우 npm install을 통해 공유 라이브러리 git을 설치할 수 있습니다.  
   ```sh
+  # 설치 예시 명령어
   npm install git+https://github.com/nic-company/mf-lib-shared.git
   ```
   ```json
   // package.json
   "dependencies": {
-    "@nic/mf-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git"
+    "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git"
   }
   ```
   - host 앱과 remote 앱이 각자 배포 시점에 다른 커밋을 참조할 수 있으므로 좀 더 안정적인 설치 배포 방식은 커밋 해시로 버전 고정하는 것이 권장됩니다.
     ```json
     "dependencies": {
-      "@nic/mf-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#commit-hash"
-      // 또는 "@nic/mf-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#v1.0.0"
+      "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#commit-hash"
+      // 또는 "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#v1.0.0"
     }
     ```
 * 공유 라이브러리가 아직 npm에 배포되기 전이면, `file:` 경로 또는 git 링크로 연결할 수 있습니다.
   ```json
   "dependencies": {
-    "@nic/mf-lib-shared": "file:../mf-lib-shared"
+    "@company/mfe-lib-shared": "file:../mfe-lib-shared"
   }
   ```
 
   :::tip <span class="admonition-title">공유 라이브러리 배포 방식</span> (중장기 권장 방식)
   * 중장기적으로는 GitHub Package Registry를 사용하는 것이 권장됩니다.
   ```sh
-  # mf-lib-shared에서 배포
+  # mfe-lib-shared에서 배포
   npm publish --registry https://npm.pkg.github.com
 
   # 각 앱 .npmrc에 추가
@@ -500,17 +386,17 @@ export default nextConfig;
   ```
   ```json
   // package.json
-  "@nic/mf-lib-shared": "^1.0.0"  // 진짜 semver 사용 가능
+  "@company/mfe-lib-shared": "^1.0.0"  // 진짜 semver 사용 가능
   ```
   &#8251; 인터넷 연결 없는 폐쇄망 환경이라면
-  사내 Verdaccio 프라이빗 레지스트리 운영(완전 독립)
+  사내 프라이빗 레지스트리 운영(완전 독립)
   :::
 
-* 공유 라이브러리의 UI 컴포넌트 파일에 Tailwind 클래스가 포함되어 있으므로, Tailwind v4가 해당 소스를 스캔하도록 `src/assets/styles/app.css`에 **@source** 지시어를 추가한다.
+* 공유 라이브러리의 UI 컴포넌트 파일에 Tailwind 클래스가 포함되어 있으므로, Tailwind v4가 해당 소스를 스캔하도록 `src/assets/styles/app.css`에 **@source** 지시어를 추가해야한다.
   ```css
   @import "tailwindcss";
   /* 공유 라이브러리의 빌드 결과물로 가져오려면 src를 dist로 변경해야한다. */
-  @source "../../node_modules/@nic/mf-lib-shared/src/**/*.{ts,tsx}";
+  @source "../../node_modules/@company/mfe-lib-shared/src/**/*.{ts,tsx}";
   ```
 
 
@@ -519,29 +405,13 @@ export default nextConfig;
 
 
 
-## tsconfig.json 경로 alias 추가
+
+
+
+
+
+
+## layout.tsx - 공통 레이아웃 구성(고민필요)
 ---
-공유 라이브러리 import 경로를 명확하게 하기 위하여 `tsconfig.json`에 **path**를 추가한다.  
-@nic/mf-lib-shared path alias는 로컬 file 링크 개발 시 타입 추론을 돕기 위한 설정이다. npm 배포 후에는 제거한다.
-* <span class="text-color-red">현재는 `git+저장소url` 방식으로 설치 했기 때문에 아래 alias를 적용하지 않는다.</span>
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-      "@nic/mf-lib-shared": ["../../mf-lib-shared/src/index.ts"] // 로컬 개발용
-    }
-  }
-}
-```
-
-
-
-
-
-
-
-## layout.tsx - 공통 레이아웃 구성
----
-Multi Zones에서 Host 앱의 레이아웃은 Host 앱에서 직접 렌더링되는 페이지에만 적용된다. Remote 앱의 페이지에는 Remote 앱 자체 레이아웃이 적용되므로, 공통 네비게이션/헤더가 필요하다면 공유 라이브러리에 Shell 컴포넌트를 두고 Host/Remote 앱 모두에서 import하는 방식을 권장한다.
+Host 앱의 레이아웃은 Host 앱에서 직접 렌더링되는 페이지에만 적용된다. Remote 앱의 페이지에는 Remote 앱 자체 레이아웃이 적용되므로, 공통 네비게이션/헤더가 필요하다면 공유 라이브러리에 Shell 컴포넌트를 두고 Host/Remote 앱 모두에서 import하는 방식을 권장한다.
 
