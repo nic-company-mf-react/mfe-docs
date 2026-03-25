@@ -84,6 +84,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       collapsible: true,
       items: [
+        'task/ready/set-mfe-proj/init-project-setup',
         'task/ready/set-mfe-proj/set-docusaurus-docs',
         'task/ready/set-mfe-proj/set-mfe-lib-shared',
         'task/ready/set-mfe-proj/set-mfe-app-main',
