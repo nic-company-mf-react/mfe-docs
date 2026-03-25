@@ -2325,3 +2325,30 @@ export default function ButtonPage(): ReactNode {
   }
 }
 ```
+
+
+
+
+
+
+
+
+## 빌드 시 타입 선언 파일 생성
+---
+* **vite-plugin-dts** 패키지를 통해 타입 선언 파일 내용을 **d.ts** 파일로 생성 되어야 하는데 되지 않는 경우가 있다. 이럴 때는 다음과 같이 `tsconfig.json` 파일 **path**가 제대로 설정되어 있는지 확인해야 합니다. 
+* 현재 프로젝트에서는 `tsconfig.app.json` 파일에 모든 설정이 들어있기 때문에 `tsconfig.app.json` 파일을 직접 연결해야 합니다.
+```ts
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+    dts({
+      include: ['src'],
+      insertTypesEntry: true,
+      tsconfigPath: './tsconfig.app.json', // 직접 tsconfig.json 옵션파일을 연결해야함
+    }),
+    // ...
+  ],
+  // ...
+});
+```
