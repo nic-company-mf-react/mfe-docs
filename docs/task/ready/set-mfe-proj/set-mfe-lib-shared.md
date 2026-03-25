@@ -2279,3 +2279,49 @@ export default function ButtonPage(): ReactNode {
 
 
 
+
+
+
+## 라우터 설치
+---
+* **mfe-lib-shared**에서 **peerDependencies**로 관리
+* **mfe-lib-shared**가 **Link**, **useNavigate** 등 **react-router** 기능을 포함한 컴포넌트를 export한다면 반드시 **peerDependencies**로 선언해야 합니다.
+  ```sh
+  npm install react-router --save-dev
+  ```
+
+```json
+// mfe-lib-shared/package.json
+{
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
+    "react-router": ">=7.0.0"  // ← peerDependencies 수동 입력
+  },
+  "devDependencies": {
+    "react-router": "^7.13.2",   // ← 개발/테스트용으로만 직접 설치
+  }
+}
+```
+* **이유**: dependencies에 넣으면 mfe-lib-shared와 각 앱이 react-router를 각각 번들해 인스턴스가 두 개가 됩니다. peerDependencies는 "나는 이 패키지가 필요하지만, 실제 설치는 소비자(각 앱)가 해라"는 의미입니다.
+
+
+
+
+
+
+
+
+## react, react-dom 패키지를 devDependencies로 이동
+---
+* **react**, **react-dom** 패키지는 **peerDependencies**에 등록 되어있기 때문에 **dependencies**에 등록되어 있으면 중복 설치가 됩니다. 따라서 **react**, **react-dom** 패키지는 현재 공유 라이브러리에서는 개발에서만 사용하므로 **devDependencies**로 이동합니다.
+
+```json
+// mfe-lib-shared/package.json
+{
+  "devDependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
+}
+```

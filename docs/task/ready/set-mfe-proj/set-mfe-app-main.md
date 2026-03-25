@@ -7,39 +7,292 @@ title: "mfe-app-main 환경구성"
 # mfe-app-main(Host 앱) 환경구성
 
 
-## create-next-app 실행
+## React 프로젝트 생성
 ---
-:::info <span class="admonition-title">Next(CLI)</span>를 이용한 프로젝트 생성
-* 새로운 Next.js 앱을 만드는 방법으로 `create-next-app`을 사용합니다.
-* [Next공식문서: https://nextjs.org/docs/app/getting-started/installation#create-with-the-cli](https://nextjs.org/docs/app/getting-started/installation#create-with-the-cli)
-* [Next.js Multi Zones 공식문서: https://nextjs.org/docs/14/pages/building-your-application/deploying/multi-zones](https://nextjs.org/docs/14/pages/building-your-application/deploying/multi-zones)
-:::
-**작업위치**: 작업하고자하는 마이크로 프론트엔드 전체 작업 폴더에서 아래 명령어를 실행합니다.
-```sh
-npx create-next-app@latest
-```
-![Next.js 호스트 앱 초기 세팅 예시](../../assets/ready/set-mf-main01.png)
-- [1] Project name 셋팅.
-  - 프로젝트 이름은 **mf-app-main**로 정하고 다음 과정을 진행합니다. 
+* [React 애플리케이션 기본 프로젝트 생성 가이드](./init-project-setup)를 참조하여 프로젝트를 생성합니다.
 
-- [2] Next.js 팀이 권장하는 기본 설정값들을 일일이 선택하지 않고 한 번에 적용할 것인지에 대한 물음에는 **No**를 선택하여 **모든 옵션을 사용자가 선택**합니다.
-- [3] 선택 옵션
-  - TypeScript 선택 여부 : 'Yes'
-  - ESLint linter 선택 여부 : 'Yes'
-  - React Compiler 사용 여부 : 'No' (일단 비활성화 후 추 후 상황에 따라 활성화 예정)
-  - Tailwind CSS 사용 여부 : 'Yes'
-  - src 디렉토리 생성 여부 : 'Yes'
-  - App Router 사용 여부 : 'Yes'
-  - import alias default '@/*'(다른 별칭 사용을 원하는지?)  : 'No'
-- `package.json` 파일에 **프로젝트 명**과 공유 라이브러리 패키지 `@nic/mf-lib-shared` **의존성을 연결**합니다.
-    ```json
+
+
+
+
+
+
+
+## react-router 설치
+---
+:::warning 멀티레포, 마이크로 프론트엔드 환경에서 라우팅을 구현하기 위해 <span class="admonition-title">react-router</span> 관리
+* 멀티레포 MFE 환경에서 **react-router**를 각 앱이 따로 설치하면, 런타임에 여러 개의 라우터 인스턴스가 생겨 **useNavigate, useLocation** 등이 동작하지 않는 심각한 문제가 발생할 수 있습니다.
+* 따라서 다음과 같이 설정이 되어야 합니다.  
+  - **host 앱** : `react-router`를 설치하고, vite.config.ts 파일에 `react-router`를 **federation shared**에 등록합니다.
+  - **remote 앱** : `react-router`를 설치하고, vite.config.ts 파일에 `react-router`를 **federation shared**에 등록합니다.
+  - **공유 라이브러리** : `react-router`를 설치하고(개발용), peerDependencies 등록합니다.
+:::
+
+### 1. host 앱 react-router 설치
+* `react-router`를 설치하고 `@module-federation/vite` 패키지를 설치하여 Vite 프로젝트에서 Module Federation을 사용할 수 있도록 합니다.
+* 이 설정은 **리모트 앱**에서도 동일하게 적용하면 됩니다.
+  ```sh
+  npm install react-router
+  npm install @module-federation/vite --save-dev
+  ```
+
+
+### 2. Host 앱 `vite.config.ts` 설정
+```ts showLineNumbers
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+// highlight-start
+import { federation } from '@module-federation/vite';
+// highlight-end
+import { resolve } from 'path';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+    // highlight-start
+    federation({
+      name: 'mfe-app-main',
+      // 리모트 앱은 추후 생성되면 연결하여 사용합니다.
+      //remotes: {
+      //  mfe_docs: 'http://localhost:5174/mf-manifest.json',
+      //},
+      shared: {
+        react: { singleton: true, requiredVersion: '^19.0.0' },
+        'react-dom': { singleton: true, requiredVersion: '^19.0.0' },
+        'react-router': { singleton: true, requiredVersion: '^7.0.0' },
+      },
+    }),
+    // highlight-end
+  ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+  server: {
+    port: 5173,
+  },
+}); 
+```
+
+
+### 3. Host 앱 라우터 설정
+* 설치한 `react-router`를 사용하여 **RouterProvider**에 router를 전달하여 라우팅을 적용합니다.
+* `src/App.tsx` 파일 코드를 모두 삭제하고 다음 코드를 추가합니다.
+  ```tsx showLineNumbers
+  // highlight-start
+  import { RouterProvider } from 'react-router';
+  import router from '@/core/router';
+  // highlight-end
+
+  export function App() {
+    return (
+      <>
+        {/* TODO: 추가 html 요소가 있으면 추가. */}
+        // highlight-start
+        <RouterProvider router={router} />
+        // highlight-end
+      </>
+    );
+  }
+
+  export default App;
+  ```
+* `src/core/router/index.ts` 파일이 없기 때문에 신규 생성합니다.
+  - 이 파일은 공통함수 **createAppRouter** 함수를 통해 **router** 인스턴스를 생성, 설정하고, 각 **개별업무(domain) 라우터**를 통합해서 리턴해주는 core 라우터 파일입니다. 공통 core영역 파일이기 때문에 공통 개발자 외에는 수정할 일이 없습니다.
+  - **개별업무(domain) 라우터**는 `src/shared/router/index.ts` 파일에 있습니다.
+  ```ts showLineNumbers
+  import { createAppRouter } from './app-common-router.ts';
+  import routes from '@/shared/router';
+
+  const router = createAppRouter(routes, {
+    // .env 파일에 설정된 VITE_ROUTER_BASENAME 값을 사용합니다.
+    basename: import.meta.env.VITE_ROUTER_BASENAME,
+  });
+
+  export * from './app-common-router.ts';
+  export default router;
+  ```
+
+* `src/core/router/app-common-router.ts` 파일이 없기 때문에 신규 생성합니다.
+  - 이 파일은 **react-router**의 **createHashRouter** 또는 **createBrowserRouter** 함수를 통해 **router** 인스턴스를 생성하고, **$router** 객체를 구현한 파일입니다.
+  ```ts showLineNumbers
+  import { createHashRouter, type DOMRouterOpts } from 'react-router';
+  import type { TAppRoute } from '@nic/mfe-lib-shared/types';
+
+  export const createAppRouter = (routes: TAppRoute[], opts?: DOMRouterOpts) => {
+    // createBrowserRouter는 서버 설정이 필요 (모든 경로를 index.html로 리다이렉트)하기 때문에 사용하지 않는다.
+    //return createBrowserRouter(routes, opts);
+    return createHashRouter(routes, opts);
+  };
+
+  // $router 객체 구현은 추후 예정
+  ```
+
+* `src/shared/router/index.tsx` 파일이 없기 때문에 신규 생성합니다.
+  - 현재 파일에서 각 domain 업무가 추가 될 때마다 해당 업무 라우터를 계속 등록합니다.
+  - `import MainRouter from '@/domains/main/router';` 이와같이 현재는 **main** 업무가 없기 때문에 다음 스탭의 업무 추가 하면서 생성합니다.
+  - `import RootLayout from '@/shared/components/layout/RootLayout';` 이와같이 현재는 **루트 레이아웃**이 없기 때문에 다음 스탭에서 추가합니다.
+  ```ts showLineNumbers
+  import type { TAppRoute } from '@nic/mfe-lib-shared/types';
+
+  // root layout 가져오기 -----------
+  import RootLayout from '@/shared/components/layout/RootLayout';
+
+  // main router 가져오기 ----------------
+  import MainRouter from '@/domains/main/router';
+  // example router 가져오기 -------------
+  //import ExampleRouter from '@/domains/example/router';
+
+  const routes: TAppRoute[] = [
     {
-        "name": "@nic/mf-app-main",
-        "dependencies": {
-            "@nic/mf-lib-shared": "file:../mf-lib-shared" // 공유 라이브러리 패키지 경로
-        }
-    }
-    ```
+      path: '/',
+      element: <RootLayout />,
+      children: MainRouter,
+    },
+    // 업무(domain) 라우터 생성될 때 다음과 같이 추가가
+    //{
+    //	path: '/example',
+    //	element: <RootLayout />,
+    //	children: ExampleRouter,
+    //},
+    {
+      path: '*',
+      element: (
+        <RootLayout
+        //message="죄송합니다. 현재 시스템에 일시적인 문제가 발생했습니다."
+        //subMessage="잠시 후 다시 접속해주세요.
+        //           <br />
+        //           문제가 지속되면 아래 고객센터로 문의해주세요."
+        />
+      ),
+    },
+  ];
+
+  export default routes;
+  ```
+ 
+
+
+
+
+
+
+
+
+## RootLayout 컴포넌트 생성
+---
+* **루트 레이아웃**은 모든 페이지의 공통 레이아웃을 정의하는 컴포넌트입니다.
+* `src/shared/components/layout/RootLayout.tsx` 파일이 없기 때문에 신규 생성합니다.
+  ```tsx showLineNumbers
+  import LayoutContent from './LayoutContent';
+
+  interface IRootLayoutProps {
+    //
+  }
+
+  export default function RootLayout({}: IRootLayoutProps): React.ReactNode {
+    return <LayoutContent />;
+  }
+  ```
+* `src/shared/components/layout/LayoutContent.tsx` 파일이 없기 때문에 신규 생성합니다.
+  - 우선 간단하게 구현하고 추후 수정 예정입니다.
+  ```tsx showLineNumbers
+  import { Outlet } from 'react-router';
+
+  export default function LayoutContent(): React.ReactNode {
+    return (
+      <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+        루트 레이아웃!!
+        <Outlet />
+      </div>
+    );
+  }
+  ```
+
+
+
+
+
+
+
+
+
+## Main 업무 추가
+---
+* **domains** 폴더에 **main** 업무를 추가하겠습니다.
+* 다음과 같이 기본 **main** 업무 폴더 구조를 생성합니다.
+  ```sh
+  src/domains/main/
+  ├── pages/
+  |   └── MainIndex.tsx
+  ├── router/
+  |   └── index.tsx
+  ```
+* `src/domains/main/pages/MainIndex.tsx` 파일이 없기 때문에 신규 생성합니다.
+  ```tsx showLineNumbers
+  export default function MainIndex(): React.ReactNode {
+    return (
+      <div>
+        <h1>Main Index</h1>
+      </div>
+    );
+  }
+  ```
+* `src/domains/main/router/index.tsx` 파일이 없기 때문에 신규 생성합니다.
+  ```tsx showLineNumbers
+  import type { TAppRoute } from '@nic/mfe-lib-shared/types';
+
+  // 메인화면 컴포넌트 가져오기
+  import MainIndex from '../pages/MainIndex';
+
+  const routes: TAppRoute[] = [
+    {
+      path: '/',
+      element: <MainIndex />,
+      name: 'MainIndex',
+    },
+  ];
+
+  export default routes;
+  ```
+
+
+
+
+
+
+
+
+## 로컬 서버 띄우기(브라우저 확인)
+---
+* 현재까지 진행하고 `npm run dev` 명령어를 실행하여 로컬 서버를 띄우면 **Module Federation** 의 **Bootstrap** 관련 에러가 발생합니다. 따라서 다음과 같이 설정을 해야 합니다.
+* Module Federation 런타임이 초기화되기 전에 main.tsx가 이미 react를 불러와버리면서, singleton 제어가 제대로 되지 않아 react가 중복 로드되거나 정의되지 않은 상태로 남게 됩니다.
+
+### Bootstrap 패턴 적용
+* **1:** `src/main.tsx` 내용을 `src/Bootstrap.tsx`로 옮기기
+  ```tsx showLineNumbers
+  import { StrictMode } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import './assets/styles/app.css';
+  import App from './App.tsx';
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+  ```
+* **2.** `src/main.tsx`를 dynamic import만 하도록 교체
+  ```tsx showLineNumbers
+  // src/main.tsx
+  import('./Bootstrap');
+  ```
+
+
+
+
 
 
 
