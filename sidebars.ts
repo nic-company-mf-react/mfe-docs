@@ -47,6 +47,11 @@ const sidebars: SidebarsConfig = {
       collapsible: true,
       items: [
         "documents/dev/create-biz-pages",
+        "documents/dev/navigating-pages",
+        "documents/dev/use-rest-api",
+        "documents/dev/update-data-with-rest-api",
+        "documents/dev/using-ui-component",
+        "documents/dev/create-domain-common-function",
         {
           type: 'category',
           label: '• Form 전송 방법',
