@@ -129,3 +129,37 @@ title: "mfe-app-main 환경구성"
     - URL 경로를 보면 Host 앱(localhost:5173)에서 Remote 앱(localhost:5174)에 있는 라우트 **`/remote1/*`** 경로로 이동되는것을 볼 수 있습니다.
     ![Remote 앱 로드](../../assets/ready/mfe-app-main/create-app03.png)
     
+
+
+
+
+
+
+## 루트 레이아웃 구성
+---
+* 디자인, 퍼블리싱 영역이며, 기본으로 제공할 루트 레이아웃을 구성합니다. 추후 개발 사이트에서 해당 레이아웃에 맞춰 컴포넌트를 추가하거나 수정하여 사용하면 됩니다.
+* 레이아웃에 관련되 파일의 `shared` 폴더의 `components/layout`, `context`, `config` 폴더를 생성하였습니다. `Bootstrap.tsx` 파일에는 **ThemeProvider** Provider를 추가하였습니다.
+    ```sh
+    src/
+    // highlight-start
+    ├── shared/
+    │   ├── components/
+    │   │   └── layout/
+    │   │       ├── common/
+    │   │       │   ├── GithubLinkButton.tsx
+    │   │       │   └── ThemeToggleButton.tsx
+    │   │       ├── AppHeader.tsx
+    │   │       ├── AppSidebar.tsx
+    │   │       ├── Backdrop.tsx
+    │   │       ├── LayoutContent.tsx
+    │   │       └── RootLayout.tsx
+    │   ├── context/
+    │   │   └── layout/
+    │   │       └── SidebarContext.tsx
+    │   └── config/
+    │       └── navigation.tsx
+    // highlight-end
+    ├── Bootstrap.tsx
+    ```
+* `src/assets/styles/app.css` 파일에 스타일 적용.
+    - 모든 디자인 토큰, 레이아웃 스타일은 공유 라이브러리(`mfe-lib-shared`)에서 제공하는 스타일을 사용합니다.
