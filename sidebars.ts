@@ -46,7 +46,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       collapsible: true,
       items: [
-        'documents/index',
+        "documents/dev/create-biz-pages",
         {
           type: 'category',
           label: '• Form 전송 방법',

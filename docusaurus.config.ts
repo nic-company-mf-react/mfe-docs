@@ -106,7 +106,7 @@ const config: Config = {
           sidebarId: 'apiDocSidebar',
         },
         {
-          href: 'http://example.com',
+          href: 'http://redsky0212.dothome.co.kr/2026/mfe-multirepo/host/',
           label: 'Example',
           position: 'left',
         },
