@@ -8,7 +8,7 @@ title: "데이터 가져오기"
 # 데이터 가져오기
 
 :::info 작업 내용
-* 각 업무(domain) **화면 컴포넌트**에서 **monorepo-mf-boilerplate**가 제공하는 **useApi()** 훅을 통해 **REST API**를 호출하여 데이터를 가져오는 방법을 설명합니다.
+* 각 업무(domain) **화면 컴포넌트**에서 **mfe-app-boilerplate**가 제공하는 **useApi()** 훅을 통해 **REST API**를 호출하여 데이터를 가져오는 방법을 설명합니다.
 :::
 
 :::tip 데이터 조회, 업데이트 방법의 차이
@@ -67,10 +67,10 @@ src
 
 import React from 'react';
 // highlight-start
-import { useApi } from '@rm/monorepo-mf-shared-library/hooks';
+import { useApi } from '@company/mfe-lib-shared/hooks';
 // highlight-end
-// IAccountLists(계좌목록). response 타입을 _types 폴더에 선언하고 사용합니다.
-import type { IAccountLists } from '@/app/(domains)/account/types';
+// IAccountLists(계좌목록). response 타입을 types 폴더에 선언하고 사용합니다.
+import type { IAccountLists } from '@/domains/account/types';
 
 // 페이지 컴포넌트의 Props 타입 정의
 export interface IAccountIndexProps {
