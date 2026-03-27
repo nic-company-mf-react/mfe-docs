@@ -163,3 +163,29 @@ title: "mfe-app-main 환경구성"
     ```
 * `src/assets/styles/app.css` 파일에 스타일 적용.
     - 모든 디자인 토큰, 레이아웃 스타일은 공유 라이브러리(`mfe-lib-shared`)에서 제공하는 스타일을 사용합니다.
+
+
+
+
+
+
+
+
+## Host 앱(mfe-app-main)에 `$router` 등록
+---
+* `$router` 객체는 공유 라이브러리인 `mfe-lib-shared`에 이미 구현되어 있습니다. 따라서 Host 앱(**mfe-app-main**)에서는 공유 라이브러리에서 제공하는 `$router` 객체를 등록하여 바로 사용할 수 있습니다.
+    - **mfe-app-main** 앱는 **react-router** 라이브러리를 최초 등록되는 Provider 가 있습니다. 이 Provider를 등록하는 파일 `src/core/router/index.ts` 파일에 다음과 같이 `$router` 객체를 등록합니다.
+    ```ts
+    import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
+
+    registerWindowRouter(router);
+    ```
+* 이제 Host 앱에서 `$router` 객체를 사용할 수 있습니다.
+    ```ts
+    // 페이지 이동
+    $router.push('/');
+    // 페이지 교체
+    $router.replace('/');
+    // 페이지 뒤로가기
+    $router.back();
+    ```
