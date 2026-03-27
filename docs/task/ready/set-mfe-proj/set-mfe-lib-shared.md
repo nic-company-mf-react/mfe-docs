@@ -2329,7 +2329,7 @@ export default function ButtonPage(): ReactNode {
   ```
 
 * **`$router` 객체 전역 타입 선언**
-  - `mfe-lib-shared/src/types/global.d.ts` 이 파일은 라이브러리 빌드 산출물(dist)에 포함되어, 사용하는 앱에서 별도 선언 없이 선언언 타입이 자동으로 인식된다.
+  - `mfe-lib-shared/src/types/global.ts` 이 파일은 라이브러리 빌드 산출물(dist)에 포함되어, 사용하는 앱에서 별도 선언 없이 선언 타입이 자동으로 인식된다. `global.ts` 파일은 빌드 후 `global.d.ts` 파일로 생성됩니다.
   ```ts
   import type { IRouter } from './router/app-router-types';
 
