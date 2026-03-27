@@ -2312,6 +2312,120 @@ export default function ButtonPage(): ReactNode {
 
 
 
+
+## `$router`객체 구현
+* **react-router** 라이브러리를 사용하여 각 애플리케이션에서 사용할 `$router` 객체를 공유 라이브러리에 구현합니다.
+---
+* **`$router` 객체 타입 선언**
+  - `mfe-lib-shared/src/types/router/app-router-types.ts` 아래 내용 타입 추가.
+  ```ts
+  import type { RouteObject, To, NavigateOptions } from 'react-router';
+
+  export interface IRouter {
+    push(to: To, options?: NavigateOptions): void;
+    replace(to: To, options?: NavigateOptions): void;
+    back(): void;
+  }
+  ```
+
+* **`$router` 객체 전역 타입 선언**
+  - `mfe-lib-shared/src/types/global.d.ts` 이 파일은 라이브러리 빌드 산출물(dist)에 포함되어, 사용하는 앱에서 별도 선언 없이 선언언 타입이 자동으로 인식된다.
+  ```ts
+  import type { IRouter } from './router/app-router-types';
+
+  declare global {
+    interface Window {
+      $router: IRouter;
+    }
+  }
+
+  export {};
+  ```
+
+* **`$router` 객체 생성 유틸 함수 구현**
+  - `mfe-lib-shared/src/utils/router/index.ts` 파일에 각 애플리케이션에서 사용할 `$router` 객체 생성하는 유틸 함수를 구현합니다.
+  ```ts
+  import type { DataRouter, To, NavigateOptions } from 'react-router';
+  import type { IRouter } from '@/types/router/app-router-types';
+
+  export function createWindowRouter(router: DataRouter): IRouter {
+    return {
+      push(to: To, options?: NavigateOptions) {
+        router.navigate(to, options);
+      },
+      replace(to: To, options?: NavigateOptions) {
+        router.navigate(to, { ...options, replace: true });
+      },
+      back() {
+        router.navigate(-1);
+      },
+    };
+  }
+
+  export function registerWindowRouter(router: DataRouter): void {
+    window.$router = createWindowRouter(router);
+  }
+  ```
+
+* **`$router` 공유 메인 엔트리에 export 추가**
+  - `mfe-lib-shared/src/index.ts` 파일에 각 애플리케이션에서 사용할 `$router` 객체를 등록합니다. (사용예시: `import { createWindowRouter, registerWindowRouter } from '@company/mfe-lib-shared';`)
+  ```ts
+  // ── 라우터 ──
+  export { createWindowRouter, registerWindowRouter } from './utils/router'; // ← export 추가
+  ```
+* **`mfe-lib-shared/src/utils/index.ts` 파일에 utils 서브패스 진입점 추가**
+  - `mfe-lib-shared/src/utils/index.ts` 파일에 utils 서브패스 진입점으로 모든 함수를 여기에 계속 등록합니다.(사용예시: `import { createWindowRouter, registerWindowRouter } from '@company/mfe-lib-shared/utils';`)
+  ```ts
+  export { createWindowRouter, registerWindowRouter } from './router';
+  // 향후 추가 예시
+  // export { formatDate } from './date';
+  // export { storage } from './storage';
+  ```
+
+* **`package.json` 파일에 utils 서브패스 추가**
+  - `mfe-lib-shared/package.json` 파일에 utils 서브패스를 추가합니다.
+  ```json
+  {
+    "exports": {
+      "./utils": {
+        "import": "./dist/utils/index.js",
+        "require": "./dist/utils/index.cjs",
+        "types": "./dist/utils/index.d.ts"
+      }
+    }
+  }
+  ```
+
+* **`vite.config.ts` 파일에 빌드 엔트리 추가**
+  - `mfe-lib-shared/vite.config.ts` 파일에 utils 서브패스를 추가합니다.
+  ```ts
+  export default defineConfig({
+    // ...
+    build: {
+      lib: {
+        entry: {
+          // ...
+          'utils/index': resolve(__dirname, 'src/utils/index.ts'),
+        },
+      },
+      // ...
+    },
+    // ...
+  });
+  ```
+* 각 애플리케이션에서는 다음과 같이 `$router` 객체를 각각 등록합니다.
+  ```ts
+  import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
+
+  // 각 애플리케이션션이 window.$router를 등록 (모든 remote 앱은 개발 시에만 사용할 수 있도록 등록)
+  registerWindowRouter(router);
+  ```
+
+
+
+
+
+
 ## react, react-dom 패키지를 devDependencies로 이동
 ---
 * **react**, **react-dom** 패키지는 **peerDependencies**에 등록 되어있기 때문에 **dependencies**에 등록되어 있으면 중복 설치가 됩니다. 따라서 **react**, **react-dom** 패키지는 현재 공유 라이브러리에서는 개발에서만 사용하므로 **devDependencies**로 이동합니다.
