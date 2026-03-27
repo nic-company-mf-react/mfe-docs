@@ -2313,7 +2313,7 @@ export default function ButtonPage(): ReactNode {
 
 
 
-## `$router`객체 구현
+## `$router` 등록 유틸 구현
 * **react-router** 라이브러리를 사용하여 각 애플리케이션에서 사용할 `$router` 객체를 공유 라이브러리에 구현합니다.
 ---
 * **`$router` 객체 타입 선언**
