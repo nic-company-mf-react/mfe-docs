@@ -77,6 +77,15 @@ const sidebars: SidebarsConfig = {
   ],
   componentsDocSidebar: [
     'components/index',
+    {
+      type: "category",
+      label: "◉ UI Components",
+      collapsed: false,
+      collapsible: true,
+      items: [
+        "components/ui/button-component",
+      ],
+    },
   ],
   apiDocSidebar: [
     'apis/index',
