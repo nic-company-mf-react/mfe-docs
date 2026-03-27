@@ -120,14 +120,7 @@ export default function AccountIndex({}: IAccountIndexProps): React.ReactNode {
 	npm install @loadable/component
     npm install -D @types/loadable__component
 	```
-* 마이크로 프론트엔드 환경이므로 Module Federation **shared** 설정을 해야합니다. (싱글통 공유 필요시에만)
-    - Host와 Remote 앱이 동일한 인스턴스를 공유하도록 두 앱의 `vite.config.ts`에 모두 추가합니다.
-    ```ts
-    shared: {
-        // ...
-        '@loadable/component': { singleton: true, requiredVersion: '^5.0.0' },
-    },
-    ```
+
 * Vite 중복로드 에러 발생 시 `[vite] (client) [Unhandled rejection] TypeError: Cannot read properties of undefined (reading 'S')`
     ```sh
     # .vite 캐시 삭제 후 재시작
