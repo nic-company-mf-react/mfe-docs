@@ -4,6 +4,11 @@ displayed_sidebar: "componentsDocSidebar"
 title: "Button"
 ---
 
+export const PLAYGROUND_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://your-domain.com/playground'
+    : 'http://localhost:5175';
+
 # Button 컴포넌트
 
 `mfe-lib-shared`에서 제공하는 기본 버튼 컴포넌트입니다.  
@@ -26,6 +31,14 @@ function BasicDemo() {
   return <Button>기본 버튼</Button>;
 }
 ```
+
+<iframe
+  src={`${PLAYGROUND_URL}/components/button`}
+  width="100%"
+  height="600"
+  style={{border: '1px solid #e2e8f0', borderRadius: '8px'}}
+  title="Button 플레이그라운드"
+/>
 
 ---
 
