@@ -123,7 +123,10 @@ title: "mfe-app-remote1 환경구성"
     ```ts
     import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
 
-    registerWindowRouter(router);
+    // standalone 실행 시에만 등록
+    if (typeof window !== 'undefined' && !window.$router) {
+        registerWindowRouter(router);
+    }
     ```
 * 이제 Host 앱에서 `$router` 객체를 사용할 수 있습니다.
     ```ts
