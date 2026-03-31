@@ -25,7 +25,7 @@
   
   <!-- Title -->
   <text x="400" y="35" text-anchor="middle" class="title">useApi 훅 동작 흐름도</text>
-  <text x="400" y="58" text-anchor="middle" class="small-text">(Route Handler 미사용 - 직접 API 호출)</text>
+  <text x="400" y="58" text-anchor="middle" class="small-text">(직접 API 호출)</text>
   
   <!-- Client Component (Initial) -->
   <rect x="100" y="85" width="600" height="130" class="box"/>
@@ -69,7 +69,7 @@
   <!-- Step 4 -->
   <rect x="120" y="680" width="560" height="45" class="highlight"/>
   <text x="140" y="703" class="step">④ Response 수신</text>
-  <text x="140" y="720" class="small-text">axios/fetch를 통한 응답 데이터 수신</text>
+  <text x="140" y="720" class="small-text">axios를 통한 응답 데이터 수신</text>
   
   <!-- Step 5 -->
   <rect x="120" y="735" width="560" height="60" class="highlight"/>

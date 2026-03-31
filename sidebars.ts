@@ -89,6 +89,23 @@ const sidebars: SidebarsConfig = {
   ],
   apiDocSidebar: [
     'apis/index',
+    {
+      type: 'category',
+      label: '◉ Functions',
+      collapsed: false,
+      collapsible: true,
+      items: [
+        {
+          type: 'category',
+          label: '• Hooks',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            'apis/global-function/hooks/use-api',
+          ],
+        },
+      ],
+    },
   ],
   taskDocSidebar: [
     'task/intro',
@@ -104,6 +121,15 @@ const sidebars: SidebarsConfig = {
         'task/ready/set-mfe-proj/set-mfe-app-main',
         'task/ready/set-mfe-proj/set-mfe-app-remote1',
         'task/ready/set-mfe-proj/npm-link',
+      ],
+    },
+    {
+      type: 'category',
+      label: '◉ 기타',
+      collapsed: true,
+      collapsible: true,
+      items: [
+        'task/etc/mfe-i18n-plan',
       ],
     },
   ],
