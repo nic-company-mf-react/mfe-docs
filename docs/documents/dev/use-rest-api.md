@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: "documentDocSidebar"
-title: "데이터 가져오기"
+title: "REST API 데이터 활용하기"
 ---
 
 
@@ -25,7 +25,7 @@ title: "데이터 가져오기"
 ## 데이터 조회
 ---
 
-🔗 [**useApi()** API 문서 바로가기]()
+🔗 [**useApi()** API 문서 바로가기](../../apis/global-function/hooks/use-api)
 
 * `useApi()` 함수는 `GET, POST` method 타입으로 **데이터를 조회**하고 결과 데이터를 활용하는 용도로 사용합니다.
 
@@ -61,7 +61,7 @@ export default function SampleComponent(): React.ReactNode {
 * `useApi()` 훅 함수를 공유 라이브러리(`@company/mfe-lib-shared/hooks`)에서 임포트 합니다.
 * `useApi()` 함수를 화면 컴포넌트 최 상단에 선언하면 화면 컴포넌트가 마운트되면서 자동으로 요청을 실행합니다.
 * `useApi()` 함수의 첫 번째 인자로 **REST API URL**을 전달합니다.
-* `useApi()` 함수의 결과 데이터는 `data` 속성에 담겨서 반환됩니다. `data` 속성의 데이터를 활용하여 화면을 구성합니다.
+* `useApi()` 함수의 결과 데이터는 `data` 속성에 담겨서 반환됩니다. `data` 속성을 통해 response 데이터를 활용할 수 있습니다.
 :::
 
 
