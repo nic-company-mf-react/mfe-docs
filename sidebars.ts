@@ -51,6 +51,7 @@ const sidebars: SidebarsConfig = {
         "documents/dev/use-rest-api",
         "documents/dev/using-ui-component",
         "documents/dev/create-domain-common-function",
+        "documents/dev/set-i18n-project",
         {
           type: 'category',
           label: '• Form 전송 방법',
