@@ -12,6 +12,34 @@ title: "다국어 세팅"
 
 ---
 
+
+
+
+
+## 내용 요약
+
+- [디렉토리 구조](#디렉토리-구조) — `src/i18n/` 하위 파일 구조와 역할 설명
+- [초기화 방법](#초기화-방법) — `Bootstrap.tsx`에서 `setupI18n(getToken)` 호출 방법
+- [3단계 폴백 레이어](#3단계-폴백-레이어) — 로그인 전/후 번역 로딩 경로와 장애 시 폴백 흐름
+- [네임스페이스 관리](#네임스페이스namespace-관리) — `namespaces.ts` 구조 및 새 NS 추가 방법
+- [환경변수 설정](#환경변수-설정-env) — `.env`에서 설정 가능한 변수 목록 및 기본값
+- [언어 자동 감지 정책](#언어-자동-감지-정책) — `localStorage` → `navigator` 순서의 감지 흐름
+- [번역 파일 작성 규칙](#번역-파일-작성-규칙) — JSON 파일 구조 예시
+- 사용 가능한 함수 정리:
+  - [`setupI18n()`](#setupi18ngettoken--i18n-초기화) — 앱 최초 초기화
+  - [`reloadI18nAfterLogin()`](#reloadi18nafterlogin--로그인-후-번역-재로드) — 로그인 후 AUTH NS 갱신
+  - [`invalidateI18nOnLogout()`](#invalidatei18nonlogout--로그아웃-후-캐시-정리) — 로그아웃 후 캐시 정리
+  - [`prefetchGuestTranslations()`](#prefetchguesttranslations--게스트-번역-강제-재로드) — GUEST NS 강제 재로드
+  - [`useTranslation`](#usetranslation--컴포넌트에서-번역-사용) — 컴포넌트에서 번역 사용
+  - [`i18n.changeLanguage`](#i18nchangelanguage--언어-변경) — 언어 변경
+  - [`AuthBackend.invalidateCache`](#authbackendinvalidatecache--번역-캐시-수동-무효화) — 캐시 수동 무효화
+- [로그인/로그아웃 생명주기 연동 요약](#로그인로그아웃-생명주기-연동-요약)
+
+
+
+
+
+
 ## 디렉토리 구조
 
 ```
