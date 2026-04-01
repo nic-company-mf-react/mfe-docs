@@ -152,6 +152,7 @@ export type { TFunction } from 'i18next';
 
 
 ## mfe-app-main 에 설정 내용 정리
+---
 * 다국어 관련 패키지 설치
 ```sh
 npm install i18next react-i18next i18next-browser-languagedetector
@@ -319,63 +320,54 @@ export class AuthBackend implements BackendModule<AuthBackendOptions> {
 ```     
 
 * `mfe-app-main/src/Bootstrap.tsx` (수정)  
-i18n init 완료 후 React 렌더링. 번들 폴백 + AuthBackend + LanguageDetector 통합.
+i18n init 완료 후 React 렌더링. 번들 폴백 + AuthBackend + LanguageDetector 통합 setupI18n 함수 내부에서 처리.
 ```ts showLineNumbers
-// ...
-import { i18n } from '@nic/mfe-lib-shared/i18n';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { AuthBackend } from './i18n/AuthBackend';
+// 기존 코드 ...
 
-// 번들 내장 폴백 번역 — 토큰 없음/서버 장애 시 사용 (src/ 내부 import → JS 번들에 포함)
-import koCommon from './i18n/locales/ko/common.json';
-import enCommon from './i18n/locales/en/common.json';
+import { setupI18n } from './i18n/setup';
 
+// 다국어 지원을 위한 i18n 초기화 설정정 ======================================================================
 // 액세스 토큰 getter — 실제 프로젝트의 auth 스토어(zustand, redux 등)와 연결
 // 현재는 localStorage 기준 예시
-const getToken = (): string | null => {
-	return localStorage.getItem('access_token');
-};
-
-i18n
-.use(AuthBackend) // 인증 기반 서버 번역 로딩
-.use(LanguageDetector) // 브라우저 언어 자동 감지
-.init({
-    // 번들 내장(resources) + 서버 로딩(backend) 동시 사용 허용하는 핵심 옵션
-    partialBundledLanguages: true,
-    // 번들 내장 폴백: 서버 응답 전 / 장애 시 사용
-    resources: {
-        ko: { common: koCommon },
-        en: { common: enCommon },
-    },
-    ns: ['common', 'main'],
-    defaultNS: 'common',
-    fallbackLng: 'ko',
-    interpolation: {
-        escapeValue: false, // React는 XSS를 자체 처리하므로 불필요
-    },
-    // AuthBackend에 전달되는 옵션
-    backend: {
-        loadPath: '/api/i18n/translations?lng={{lng}}&ns={{ns}}',
-        getToken,
-        cacheTTL: 5 * 60 * 1000, // 5분
-    },
-    // LanguageDetector 옵션
-    detection: {
-        order: ['localStorage', 'navigator'],
-        caches: ['localStorage'],
-        lookupLocalStorage: 'i18n_language', // localStorage 키명
-    },
-})
-.then(() => {
-    // i18n 초기화 완료 후 렌더링 — 첫 화면부터 번역 텍스트 정상 표시 보장
-    createRoot(document.getElementById('root')!).render(
-        <StrictMode>
-            <AppProviders queryConfig={queryConfig}>
-                <App />
-            </AppProviders>
-        </StrictMode>,
-    );
+const getToken = (): string | null => localStorage.getItem('access_token');
+// i18n 초기화 후 렌더링(다국어 지원)
+setupI18n(getToken).then(() => {
+	// i18n 초기화 완료 후 렌더링 — 첫 화면부터 번역 텍스트 정상 표시 보장
+	createRoot(document.getElementById('root')!).render(
+		<StrictMode>
+			<AppProviders queryConfig={queryConfig}>
+				<App />
+			</AppProviders>
+		</StrictMode>,
+	);
 });
+```
+* 관련 파일 내용
+```sh
+public
+├── locales                   # 정적 번역 파일 — 빌드 결과물에 포함되어 서버 없이 직접 제공(파일 변경 교체를 쉽게 하기 위해)
+│   ├── ko                    # 한국어 번역 리소스
+│   │   ├── common.json       # 공통 UI 번역 (버튼, 메시지 등 전 화면 공유)
+│   │   └── main.json         # 메인 화면 전용 번역
+│   └── en                    # 영어 번역 리소스
+│       ├── common.json       # 공통 UI 번역 (영문)
+│       └── main.json         # 메인 화면 전용 번역 (영문)
+src
+├── i18n
+│   ├── setup.ts              # i18n 초기화 진입점 — setupI18n / prefetchGuestTranslations / reloadI18nAfterLogin / invalidateI18nOnLogout 함수 제공
+│   ├── AuthBackend.ts        # i18next 커스텀 백엔드 — JWT 토큰 기반으로 번역 API 호출, TTL 캐싱, 401/토큰 없음 시 번들 폴백 처리
+│   ├── locales               # 번들 내장 폴백 번역 파일 모음 (서버 장애·비로그인 시 사용)
+│   │   ├── ko                # 한국어 번역 리소스
+│   │   │   ├── common.json   # 공통 UI 번역 (버튼, 메시지 등 전 화면 공유)
+│   │   │   └── main.json     # 메인 화면 전용 번역 (로그인 후 서버에서 최신본으로 교체)
+│   │   └── en                # 영어 번역 리소스
+│   │       ├── common.json   # 공통 UI 번역 (영문)
+│   │       └── main.json     # 메인 화면 전용 번역 (영문)
+│   └── config
+│        ├── detection.config.ts  # 언어 자동 감지 정책 — localStorage 우선, 없으면 브라우저 언어(navigator) 사용
+│        ├── i18n.config.ts       # i18next init() 옵션 통합 관리 — resources·ns·fallbackLng·backend·detection 조합
+│        ├── namespaces.ts        # 네임스페이스 목록·기본값 단일 관리 — NAMESPACES / GUEST_NAMESPACES / AUTH_NAMESPACES
+│        └── resources.ts         # locales/**/*.json 을 빌드 시 자동 스캔해 i18next resources 객체로 변환
 ```
 
 
