@@ -70,8 +70,15 @@ const sidebars: SidebarsConfig = {
             'documents/index',
           ],
         },
-        'documents/index',
-        'documents/index',
+      ],
+    },
+    {
+      type: 'category',
+      label: '◉ 기타 가이드',
+      collapsed: false,
+      collapsible: true,
+      items: [
+        "documents/etc/how-to-storybook",
       ],
     },
   ],
