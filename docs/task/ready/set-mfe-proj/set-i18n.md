@@ -374,5 +374,42 @@ src
 
 
 
+
+## 전체적인 동작의 흐름
+---
+1. **토큰 없음 (로그인 전)**
+  * → [1단계] public/locales/*.json (정적 파일)
+  * → [2단계] 실패 시 재시도 (retryCount)
+  * → [3단계] 번들 내장 JSON (폴백)
+2. **토큰 있음 (로그인 후)**
+  * → [1단계] loadPath API (Bearer 토큰 인증 요청)
+  * → [2단계] 실패 시 번들 내장 JSON (폴백)  
+             (401이나 네트워크 오류 시 callback(err, false))  
+  * 코드에서 명확히 분기되는 부분입니다.
+```ts showLineNumbers
+const token = getToken();
+// 토큰 없음(로그인 전) → public/locales/ 정적 파일 fetch (1단계)
+if (!token) {
+        // ... publicLoadPath 사용
+  return;  // ← 여기서 return, loadPath는 절대 안 탐
+}
+// 토큰 있음(로그인 후) → 인증 API fetch
+const url = loadPath ...
+```
+3. **정리**
+
+| 상태 | 1순위 | 폴백 |
+|---|---|---|
+| 로그인 전 | public LoadPath (정적 JSON) | 번들 내장 JSON |
+| 로그인 후 | loadPath (인증 API) | 번들 내장 JSON |
+
+즉, loadPath(서버 API)는 로그인 후에만 사용되고, 로그인 전에는 절대 호출되지 않습니다. 두 경로는 서로 완전히 독립적으로 동작합니다.
+
+
+
+
+
+
+
 ## 다국어 세팅 각 앱에서 사용
 ---
