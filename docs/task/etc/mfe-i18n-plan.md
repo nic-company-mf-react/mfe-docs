@@ -1,3 +1,9 @@
+---
+sidebar_position: 1
+displayed_sidebar: "taskDocSidebar"
+title: "i18n 다국어 세팅 플랜"
+---
+
 # MFE i18n 다국어 세팅 플랜
 
 > i18next + react-i18next를 기반으로, mfe-lib-shared에 공통 Provider와 i18n 인스턴스를 배치하고

@@ -139,6 +139,7 @@ const sidebars: SidebarsConfig = {
       collapsible: true,
       items: [
         'task/etc/mfe-i18n-plan',
+        'task/etc/set-sdd',
       ],
     },
   ],
