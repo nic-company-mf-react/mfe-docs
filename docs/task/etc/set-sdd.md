@@ -290,3 +290,314 @@ prompts:
       가독성, 재사용성, 성능을 개선하되 동작은 유지해줘.
       변경 이유도 함께 설명해줘.
 ```
+
+
+
+
+## 사용 서버 세팅 관련 내용
+---
+3~5명 팀 환경이면 동시 요청 처리와 모델 상주가 핵심입니다. 한 가지만 확인하겠습니다.월 5~10만원 (팀 나눠서 부담)
+
+결론: Hetzner CX42 (월 €18 ≈ ₩27,000)
+3~5명이 나누면 1인당 월 ₩5,400~9,000 수준입니다.
+
+구성 아키텍처
+```
+[팀원 A - VS Code + Continue.dev] ─┐
+[팀원 B - VS Code + Continue.dev] ─┤─── HTTPS (인터넷) ───► [Hetzner CX42]
+[팀원 C - VS Code + Continue.dev] ─┤                         Ollama 서버
+[팀원 D - VS Code + Continue.dev] ─┘                         RAM 16GB
+                                                              8 vCPU
+        ↓ 자동완성 + 임베딩은                                  NVMe 160GB
+        각자 로컬 PC에서 실행
+```
+역할 분리 전략 (3~5명 동시 사용 핵심)
+
+|역할 | 실행위치 | 모델 | 이유 | 
+| :--- | :--- | :--- | :--- | 
+| 자동완성 | 각자 로컬 PC | qwen2.5-coder:1.5b | 동시 요청 시 서버 부하 방지 | 
+| 임베딩 | 각자 로컬 PC | nomic-embed-text | 가벼워서 로컬 충분 | 
+| 채팅/리팩토링 | 중앙 서버 | qwen2.5-coder:7b | 팀 공유 | 
+| 설계/추론 | 중앙 서버 | deepseek-r1:14b | 팀 공유 | 
+
+> 자동완성은 로컬에서 처리하면 서버 동시 요청이 "채팅 요청"만 남아 3~5명도 감당 가능합니다.
+
+
+서버 세팅 순서
+
+1단계: Hetzner CX42 서버 생성
+```
+hetzner.com → New Server
+- Location: Helsinki
+- OS: Ubuntu 22.04
+- Type: CX42 (8 vCPU, 16GB RAM, 160GB NVMe)
+- 월 €18 (~₩27,000)
+- SSH Key 등록
+```
+
+2단계: 서버 초기 설정
+```bash
+ssh root@[서버IP]
+
+# 업데이트
+apt update && apt upgrade -y
+
+# Swap 8GB 추가 (deepseek-r1:14b 로딩 여유분)
+fallocate -l 8G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+echo 'vm.swappiness=10' >> /etc/sysctl.conf
+sysctl -p
+
+# 방화벽
+ufw allow ssh
+ufw allow 443/tcp
+ufw enable
+```
+
+3단계: Ollama 설치 및 팀 사용 최적화
+```bash
+curl -fsSL https://ollama.ai/install.sh | sh
+
+sudo systemctl edit ollama --force
+```
+```ini
+ini[Service]
+Environment="OLLAMA_HOST=127.0.0.1:11434"
+Environment="OLLAMA_MAX_LOADED_MODELS=2"
+Environment="OLLAMA_NUM_PARALLEL=3"
+Environment="OLLAMA_KEEP_ALIVE=30m"
+Environment="OLLAMA_NUM_THREADS=6"
+```
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+
+# 모델 설치
+ollama pull qwen2.5-coder:7b
+ollama pull deepseek-r1:14b
+```
+
+4단계: Nginx + 팀원 IP 화이트리스트
+```bash
+apt install nginx -y
+
+# Self-signed 인증서 (폐쇄망 재현)
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+  -keyout /etc/ssl/private/ollama.key \
+  -out /etc/ssl/certs/ollama.crt \
+  -subj "/CN=ollama-team-server"
+```
+```nginx
+# /etc/nginx/conf.d/ollama.conf
+
+server {
+    listen 443 ssl;
+
+    ssl_certificate     /etc/ssl/certs/ollama.crt;
+    ssl_certificate_key /etc/ssl/private/ollama.key;
+
+    # ★ 팀원 공인 IP 화이트리스트 (폐쇄망 재현 핵심)
+    allow [팀원A_IP]/32;
+    allow [팀원B_IP]/32;
+    allow [팀원C_IP]/32;
+    allow [팀원D_IP]/32;
+    allow [팀원E_IP]/32;
+    deny  all;
+
+    location / {
+        proxy_pass         http://127.0.0.1:11434;
+        proxy_read_timeout 300s;
+        proxy_buffering    off;
+        proxy_cache        off;
+        
+        # 동시 연결 제한 (서버 보호)
+        limit_conn addr 3;
+    }
+}
+
+# 동시 연결 제한 설정
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+```
+
+```bash
+nginx -t && systemctl reload nginx
+```
+
+5단계: 각 팀원 PC 로컬 모델 설치  
+팀원 전원이 각자 PC에서 실행:  
+
+```bash
+# 각자 PC에서 (Windows/Mac/Linux)
+ollama pull qwen2.5-coder:1.5b   # 자동완성
+ollama pull nomic-embed-text      # 임베딩
+```
+
+6단계: 팀 공용 config.yaml   
+이 파일을 팀 Git 저장소에 올려두고 팀원 전체가 공유합니다.   
+
+```yaml
+# ~/.continue/config.yaml
+
+name: Financial FE SDD Team Practice
+version: 1.0.0
+schema: v1
+
+models:
+
+  # 채팅 / 리팩토링 → 중앙 서버
+  - name: FE Chat (Qwen 7B) [서버]
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: https://[서버IP]
+    roles:
+      - chat
+      - edit
+      - apply
+    keepAlive: 1800
+    requestOptions:
+      verifySsl: false
+      timeout: 120
+    defaultCompletionOptions:
+      temperature: 0.5
+      contextLength: 8192
+      maxTokens: 4096
+
+  # 설계 / 추론 → 중앙 서버
+  - name: Reasoning (DeepSeek 14B) [서버]
+    provider: ollama
+    model: deepseek-r1:14b
+    apiBase: https://[서버IP]
+    roles:
+      - chat
+    keepAlive: 1800
+    requestOptions:
+      verifySsl: false
+      timeout: 300
+    defaultCompletionOptions:
+      temperature: 0.6
+      contextLength: 8192
+      maxTokens: 4096
+
+  # 자동완성 → 각자 로컬 PC
+  - name: Autocomplete (1.5B) [로컬]
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+    apiBase: http://localhost:11434
+    roles:
+      - autocomplete
+    keepAlive: 3600
+    autocompleteOptions:
+      debounceDelay: 400
+      maxPromptTokens: 1024
+      multilineCompletions: auto
+      onlyMyCode: true
+    defaultCompletionOptions:
+      temperature: 0.1
+      contextLength: 2048
+
+  # 임베딩 → 각자 로컬 PC
+  - name: Embeddings [로컬]
+    provider: ollama
+    model: nomic-embed-text
+    apiBase: http://localhost:11434
+    roles:
+      - embed
+    embedOptions:
+      maxChunkSize: 512
+      maxBatchSize: 4
+
+context:
+  - provider: code
+  - provider: diff
+  - provider: folder
+  - provider: codebase
+  - provider: terminal
+  - provider: open
+
+rules:
+  - TypeScript 기본 사용, any 타입 금지
+  - React 함수형 컴포넌트 + Hooks 패턴
+  - 금융 데이터(금액/계좌/날짜)는 반드시 포맷팅 함수 사용
+  - 접근성 aria 속성 포함
+  - 에러/로딩 상태 항상 포함
+  - 코드 설명은 한국어, 코드는 영어
+
+prompts:
+  - name: sdd-component
+    description: SDD 명세 기반 컴포넌트 생성
+    prompt: |
+      아래 명세로 React + TypeScript 컴포넌트를 생성해줘.
+      명세: {{{ input }}}
+      - Props 인터페이스 정의
+      - 금융 데이터 포맷팅 포함
+      - 에러/로딩 상태 처리
+      - 접근성(aria) 속성
+      - JSDoc 주석
+
+  - name: sdd-test
+    description: SDD 명세 기반 테스트 생성
+    prompt: |
+      Jest + React Testing Library로 테스트 작성해줘.
+      - 정상/에러/로딩 케이스
+      - 금융 데이터 포맷 검증
+      - 접근성 테스트
+
+  - name: review
+    description: 금융권 기준 코드 리뷰
+    prompt: |
+      금융권 기준으로 코드 리뷰해줘:
+      1. 보안 취약점 (XSS, 민감정보 노출)
+      2. 금융 데이터 처리 오류 가능성
+      3. 접근성 준수 여부
+      4. TypeScript 타입 안전성
+      5. 성능 문제
+```
+
+팀원 온보딩 체크리스트  
+서버 세팅 후 팀원에게 공유할 내용입니다.  
+□ 1. 자기 공인 IP 확인 → 서버 관리자(나)에게 전달
+      https://whatismyip.com
+
+□ 2. 로컬 Ollama 설치
+      https://ollama.ai/download
+
+□ 3. 로컬 모델 설치
+      ollama pull qwen2.5-coder:1.5b
+      ollama pull nomic-embed-text
+
+□ 4. VS Code Continue.dev 확장 설치
+
+□ 5. config.yaml을 Git에서 받아
+      ~/.continue/config.yaml 에 복사
+
+□ 6. VS Code 재시작 → Continue 패널에서 모델 연결 확인
+
+비용 최종 정리  
+
+| 항목 | 비용 |
+| Hetzner CX42 | €18/월 (~₩27,000) |
+| 1인당 부담 (5명) | ₩5,400/월 |
+| 1인당 부담 (3명) | ₩9,000/월 |
+
+예산 ₩10만원 이내에서 5명이 실제 금융권 폐쇄망 구조와 동일한 환경을 쓸 수 있습니다. 실제 프로젝트 투입 직전에는 한 달만 CX52(32GB RAM, €38)로 업그레이드하면 deepseek-r1:32b까지 테스트할 수 있습니다.
+
+
+
+
+
+
+
+## 검색 프롬프트
+---
+그럼 내가 개인적으로 이런 형식의 프로젝트를 구현해 보기 위하여 AI 서버용으로 하나 dothome.co.kr에서 구입하여 운용하고 싶다. 그리고 거기에 ollama 를 세팅해서 해당 서버를 통해서 AI 개발을 하고 싶다. 방법을 알려줘. 아니면 많이 사용하는 서버를 추천해줘도 돼
+
+핵심은 나중에 금융권 프로젝트를 진행할 때 SDD 방법론으로 프론트엔드 개발용 테스트를 위한 환경을 미리 해보기 위한 것이니까 그것을 참조해서 다시 알려줘
+
+질문: 테스트 환경을 혼자 쓸건가요, 팀과 함께 쓸건가요?
+답변: 혼자 (3~5인 개발 환경 시뮬레이션)
+
+질문: 서버 비용 예산은 어느 정도로 생각하세요?
+답변: 월 3만원 이하 (최저 비용)
