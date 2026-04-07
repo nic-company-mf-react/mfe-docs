@@ -127,6 +127,7 @@ const sidebars: SidebarsConfig = {
         'task/ready/set-mfe-proj/set-mfe-lib-shared',
         'task/ready/set-mfe-proj/set-mfe-app-main',
         'task/ready/set-mfe-proj/set-mfe-app-remote1',
+        'task/ready/set-mfe-proj/add-shadcn-ui',
         'task/ready/set-mfe-proj/set-i18n',
         'task/ready/set-mfe-proj/set-first-storybook',
         'task/ready/set-mfe-proj/npm-link',
