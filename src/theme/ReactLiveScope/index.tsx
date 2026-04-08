@@ -1,4 +1,5 @@
 import React from 'react';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@nic/mfe-lib-shared/components/ui';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Demo Button – mfe-lib-shared가 설치되면 아래 import로 교체
@@ -96,6 +97,7 @@ const ReactLiveScope = {
   React,
   ...React,
   Button,
+  Accordion, AccordionItem, AccordionTrigger, AccordionContent
 };
 
 export default ReactLiveScope;

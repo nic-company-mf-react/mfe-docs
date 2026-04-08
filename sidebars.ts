@@ -91,6 +91,7 @@ const sidebars: SidebarsConfig = {
       collapsible: true,
       items: [
         "components/ui/button-component",
+        "components/ui/accordion-component",
       ],
     },
   ],
