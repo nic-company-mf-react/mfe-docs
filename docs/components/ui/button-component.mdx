@@ -5,11 +5,15 @@ title: "Button"
 hide_table_of_contents: true
 ---
 
+import AutoHeightStorybookIframe from '../../../src/components/AutoHeightStorybookIframe';
+
 export const PLAYGROUND_URL =
   process.env.NODE_ENV === 'production'
     ? 'http://redsky0212.dothome.co.kr/2026/mfe-multirepo/storybook/'
     : 'http://localhost:6006';
-    
+
+
+
 
 # Button
 
@@ -30,13 +34,18 @@ export const PLAYGROUND_URL =
 
 ## Button 인터랙티브 예제
 ---
-
-<iframe
+<AutoHeightStorybookIframe
   src={`${PLAYGROUND_URL}?path=/docs/components-button--docs&nav=0&panel=false`}
+  title="Button 인터랙티브 예제"
+  minHeight={400}
+/>
+{/* <iframe
+  src={`${PLAYGROUND_URL}?path=/docs/components-button--docs&nav=0&panel=false`}
+  ref={iframeRef}
   width="100%"
   height="1000px"
   style={{border: '1px solid #e2e8f0', borderRadius: '8px', overflow:'hidden'}}
   title="Button 인터랙티브 예제"
-/>
+/> */}
 
 ---
