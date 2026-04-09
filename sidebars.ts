@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
         "started/getting-started/set-dev-env-config",
         "started/getting-started/dev-convention",
         "started/getting-started/react-style-guide",
+        "started/getting-started/test-automation",
       ],
     },
     {
