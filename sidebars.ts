@@ -26,6 +26,7 @@ const sidebars: SidebarsConfig = {
         "started/getting-started/react-style-guide",
         "started/getting-started/test-automation",
         "started/getting-started/component-documentation",
+        "started/getting-started/seo-optimization",
       ],
     },
     {
