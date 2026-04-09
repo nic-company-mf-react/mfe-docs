@@ -97,6 +97,15 @@ const sidebars: SidebarsConfig = {
         "components/ui/accordion-component",
       ],
     },
+    {
+      type: "category",
+      label: "◉ UI Component API",
+      collapsed: false,
+      collapsible: true,
+      items: [
+        "components/ui/api/button-api",
+      ],
+    },
   ],
   apiDocSidebar: [
     'apis/index',

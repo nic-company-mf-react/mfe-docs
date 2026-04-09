@@ -1,0 +1,237 @@
+---
+sidebar_position: 1
+displayed_sidebar: "componentsDocSidebar"
+title: "Button"
+hide_table_of_contents: false
+---
+
+
+# Button API
+
+`mfe-lib-shared`의 **Button** 컴포넌트 API 문서입니다.  
+**Button** 컴포넌트의 **props**와 **events** 및 **기타 API**에 대한 상세 정보를 확인합니다.
+
+
+
+
+
+## 임포트
+---
+```ts
+import { Button } from '@nic/mfe-lib-shared/components';
+```
+
+
+
+
+
+
+## Props
+---
+
+
+
+
+
+
+
+
+
+
+## Variant (종류)
+
+`variant` prop으로 버튼의 시각적 스타일을 선택합니다.
+
+```jsx live
+function VariantDemo() {
+  return (
+    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+    </div>
+  );
+}
+```
+
+| Variant | 설명 |
+|---|---|
+| `primary` | 기본 강조 버튼 (파란색) |
+| `secondary` | 보조 버튼 (회색 배경) |
+| `destructive` | 삭제/경고 버튼 (빨간색) |
+| `outline` | 테두리만 있는 버튼 |
+| `ghost` | 배경 없는 버튼 |
+
+---
+
+## Size (크기)
+
+```jsx live
+function SizeDemo() {
+  return (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+    </div>
+  );
+}
+```
+
+---
+
+## Disabled (비활성화)
+
+```jsx live
+function DisabledDemo() {
+  return (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button variant="primary" disabled>Primary (비활성)</Button>
+      <Button variant="outline" disabled>Outline (비활성)</Button>
+    </div>
+  );
+}
+```
+
+---
+
+## Full Width
+
+```jsx live
+function FullWidthDemo() {
+  return (
+    <div style={{ maxWidth: '400px' }}>
+      <Button fullWidth>전체 너비 버튼</Button>
+    </div>
+  );
+}
+```
+
+---
+
+## 인터랙티브 플레이그라운드
+
+Props를 직접 코드에서 바꿔보세요.
+
+```jsx live
+function Playground() {
+  const [variant, setVariant] = React.useState('primary');
+  const [size, setSize] = React.useState('md');
+  const [disabled, setDisabled] = React.useState(false);
+  const [label, setLabel] = React.useState('클릭해보세요!');
+  const [clickCount, setClickCount] = React.useState(0);
+
+  const controlStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    marginBottom: '16px',
+    fontSize: '13px',
+  };
+  const rowStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  };
+  const labelStyle = {
+    width: '80px',
+    fontWeight: 'bold',
+    color: '#555',
+  };
+  const selectStyle = {
+    padding: '2px 6px',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    fontSize: '13px',
+  };
+
+  return (
+    <div style={{ fontFamily: 'sans-serif' }}>
+      {/* 컨트롤 패널 */}
+      <div style={{
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: '8px',
+        padding: '16px',
+        marginBottom: '20px',
+      }}>
+        <div style={controlStyle}>
+          <div style={rowStyle}>
+            <span style={labelStyle}>variant</span>
+            <select style={selectStyle} value={variant} onChange={e => setVariant(e.target.value)}>
+              {['primary', 'secondary', 'destructive', 'outline', 'ghost'].map(v => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
+          </div>
+          <div style={rowStyle}>
+            <span style={labelStyle}>size</span>
+            <select style={selectStyle} value={size} onChange={e => setSize(e.target.value)}>
+              {['sm', 'md', 'lg'].map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+          <div style={rowStyle}>
+            <span style={labelStyle}>disabled</span>
+            <input
+              type="checkbox"
+              checked={disabled}
+              onChange={e => setDisabled(e.target.checked)}
+            />
+          </div>
+          <div style={rowStyle}>
+            <span style={labelStyle}>label</span>
+            <input
+              style={{ ...selectStyle, width: '160px' }}
+              value={label}
+              onChange={e => setLabel(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 미리보기 */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '32px',
+        background: '#fff',
+        border: '1px dashed #cbd5e1',
+        borderRadius: '8px',
+      }}>
+        <Button
+          variant={variant}
+          size={size}
+          disabled={disabled}
+          onClick={() => setClickCount(c => c + 1)}
+        >
+          {label}
+        </Button>
+        {clickCount > 0 && (
+          <span style={{ fontSize: '12px', color: '#94a3b8' }}>
+            클릭 횟수: {clickCount}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Props
+
+| Prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'destructive' \| 'outline' \| 'ghost'` | `'primary'` | 버튼 스타일 종류 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 버튼 크기 |
+| `disabled` | `boolean` | `false` | 비활성화 여부 |
+| `fullWidth` | `boolean` | `false` | 전체 너비 차지 여부 |
+| `onClick` | `() => void` | - | 클릭 핸들러 |
+| `children` | `ReactNode` | - | 버튼 내용 |
