@@ -20,16 +20,20 @@ export default function AutoHeightStorybookIframe({
 
   
   useEffect(() => {
-    window.addEventListener('message', (event) => {
-        const data = event.data;
-        const iframe = iframeRef.current;
-        if (!iframe) return;
-        console.log('=============message', data.height);
-        iframe.style.height = Number(data.height) + 'px';
-    });
+    const handleMessage = (event: MessageEvent) => {
+      const data = event.data;
+      if (data?.type !== 'loaded') return;
+      
+      const iframe = iframeRef.current;
+      if (!iframe) return;
+      
+      iframe.style.height = Number(data.height) + 'px';
+    };
+
+    window.addEventListener('message', handleMessage);
 
     return () => {
-        window.removeEventListener('message', (event) => {});
+      window.removeEventListener('message', handleMessage);
     };
   }, []);
 
@@ -41,7 +45,6 @@ export default function AutoHeightStorybookIframe({
       width="100%"
       className={className}
       style={{
-        border: '1px solid #e2e8f0',
         borderRadius: '8px',
         overflow: 'hidden',
         display: 'block',
