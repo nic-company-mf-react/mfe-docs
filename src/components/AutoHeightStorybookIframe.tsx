@@ -38,18 +38,19 @@ export default function AutoHeightStorybookIframe({
   }, []);
 
   return (
-    <iframe
-      ref={iframeRef}
-      src={src}
-      title={title}
-      width="100%"
-      className={className}
-      style={{
-        borderRadius: '8px',
-        overflow: 'hidden',
-        display: 'block',
-        ...style,
-      }}
-    />
+    <div style={{border: '1px solid #e2e8f0', borderRadius: '8px', overflow:'hidden'}}>
+      <iframe
+        ref={iframeRef}
+        src={src}
+        title={title}
+        width="100%"
+        className={className}
+        style={{
+          overflow: 'hidden',
+          display: 'block',
+          ...style,
+        }}
+      />
+    </div>
   );
 }
