@@ -22,7 +22,7 @@ title: "Storybook 작성방법"
 
 
 ### **방법 1**: `*.stories.tsx` 파일을 작성하여 가이드 페이지를 구성합니다. (기본 방법)
-* 이 때 `*.stories.tsx` 파일 meta 정보에 `tags: ['autodocs']` 속성을 추가하여 자동으로 가이드 페이지를 생성하게 합니다.
+* `*.stories.tsx` 파일 meta 정보에 `tags: ['autodocs']` 속성을 추가하여 자동으로 가이드 페이지를 구성하는 방법입니다.
 
 ![storybook 페이지 구성](../assets/stories-structure.svg)
 
