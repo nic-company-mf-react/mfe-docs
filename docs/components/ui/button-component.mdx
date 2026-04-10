@@ -6,13 +6,7 @@ hide_table_of_contents: false
 ---
 
 import AutoHeightStorybookIframe from '../../../src/components/AutoHeightStorybookIframe';
-
-export const PLAYGROUND_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'http://redsky0212.dothome.co.kr/2026/mfe-multirepo/storybook/'
-    : 'http://localhost:6006';
-
-
+import { DOC_CONFIG } from '../../../src/config/doc-config';
 
 
 # Button
@@ -34,7 +28,7 @@ export const PLAYGROUND_URL =
 
 ## Button 인터랙티브 예제
 <AutoHeightStorybookIframe
-  src={`${PLAYGROUND_URL}?path=/docs/components-button--docs&nav=0&hideDocsToc=1`}
+  src={`${DOC_CONFIG.STORYBOOK_URL}?path=/docs/components-button--docs&nav=0&hideDocsToc=1`}
   title="Button 인터랙티브 예제"
   minHeight={600}
 />
