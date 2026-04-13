@@ -19,3 +19,5 @@ title: 'Components'
 - **[Carousel](./ui/carousel-component)** — 슬라이드를 넘기며 보여주는 캐러셀 컴포넌트
 - **[Checkbox](./ui/checkbox-component)** — 켜짐·꺼짐을 전환하는 체크박스 컴포넌트
 - **[Combobox](./ui/combobox-component)** — 입력과 제안 목록으로 항목을 고르는 콤보박스 컴포넌트
+- **[Dialog](./ui/dialog-component)** — 모달 형태로 확인·알림·짧은 입력을 받는 대화상자 컴포넌트
+- **[Input](./ui/input-component)** — 폼·데이터 입력용 단일 라인 텍스트 입력 컴포넌트

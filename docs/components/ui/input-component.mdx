@@ -1,0 +1,63 @@
+---
+sidebar_position: 1
+displayed_sidebar: "componentsDocSidebar"
+title: "Input"
+hide_table_of_contents: false
+---
+
+import AutoHeightStorybookIframe from '../../../src/components/AutoHeightStorybookIframe';
+import { DOC_CONFIG } from '../../../src/config/doc-config';
+
+
+# Input
+
+`mfe-lib-shared`에서 제공하는 텍스트 입력 컴포넌트입니다.  
+**폼과 사용자 데이터 입력**에 쓰이며, 기본 스타일과 접근성 속성을 갖춘 단일 라인 입력 필드입니다. 이메일·검색어·이름 등 짧은 문자열을 받을 때 자주 사용합니다.  
+구현·패턴은 [shadcn/ui Input (Base UI)](https://ui.shadcn.com/docs/components/base/input)와 맞추어 두었으므로, 세부 API·예제는 아래 공식 문서를 참고하면 됩니다.
+
+---
+
+## shadcn/ui 참고
+
+상세 설치·예제·API는 공식 문서를 참고하세요.
+
+* [Input — shadcn/ui (Base UI)](https://ui.shadcn.com/docs/components/base/input)
+
+**문서에서 다루는 내용 예시**
+
+* 기본: `import { Input } from "@/components/ui/input"` 후 `<Input />`
+* 라벨·설명: `Field`, `FieldLabel`, `FieldDescription`과 조합
+* 여러 필드: `FieldGroup`으로 `Field` 블록 나열
+* 비활성: `disabled` prop, `Field`에 `data-disabled`로 스타일 연동
+* 오류: 입력에 `aria-invalid`, `Field`에 `data-invalid`로 오류 상태 스타일
+* 파일: `type="file"`로 파일 선택 입력
+* 인라인: `Field`의 `orientation="horizontal"`과 `Button`으로 검색 입력 등
+* 그리드: 여러 `Input`을 나란히 배치
+* 필수: HTML `required` 속성
+* 라벨에 `Badge`(예: Beta) 강조
+* `InputGroup`으로 아이콘·텍스트·버튼을 입력 안에 배치, `ButtonGroup`과의 조합
+* 전체 폼 예제(여러 입력, 셀렉트, 제출 버튼 등)
+* RTL: [shadcn/ui RTL 가이드](https://ui.shadcn.com/docs/rtl) 및 동일 페이지 **RTL** 예제
+
+세부 prop·동작은 문서의 **API Reference** 링크를 따라가면 됩니다.
+
+---
+
+
+{/* ## Input API
+---
+아래 링크를 통해 **Input** 컴포넌트의 API 문서를 확인할 수 있습니다.
+
+* [Input 컴포넌트 API 문서](./api/input-api.md) */}
+
+
+
+
+## Input 인터랙티브 예제
+---
+<AutoHeightStorybookIframe
+  src={`${DOC_CONFIG.STORYBOOK_URL}?path=/docs/components-input--docs&nav=0&hideDocsToc=1`}
+  title="Input 인터랙티브 예제"
+  minHeight={600}
+/>
+---

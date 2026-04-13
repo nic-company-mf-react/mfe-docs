@@ -102,6 +102,8 @@ const sidebars: SidebarsConfig = {
         "components/ui/carousel-component",
         "components/ui/checkbox-component",
         "components/ui/combobox-component",
+        "components/ui/dialog-component",
+        "components/ui/input-component",
       ],
     },
     {
