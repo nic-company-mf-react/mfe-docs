@@ -93,8 +93,10 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       collapsible: true,
       items: [
-        "components/ui/button-component",
         "components/ui/accordion-component",
+        "components/ui/alert-component",
+        "components/ui/badge-component",
+        "components/ui/button-component",
       ],
     },
     {
