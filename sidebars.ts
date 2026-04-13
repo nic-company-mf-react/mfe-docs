@@ -97,6 +97,7 @@ const sidebars: SidebarsConfig = {
         "components/ui/alert-component",
         "components/ui/badge-component",
         "components/ui/button-component",
+        "components/ui/button-group-component",
       ],
     },
     {
