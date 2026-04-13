@@ -1,0 +1,55 @@
+---
+sidebar_position: 1
+displayed_sidebar: "componentsDocSidebar"
+title: "Calendar"
+hide_table_of_contents: false
+---
+
+import AutoHeightStorybookIframe from '../../../src/components/AutoHeightStorybookIframe';
+import { DOC_CONFIG } from '../../../src/config/doc-config';
+
+
+# Calendar
+
+`mfe-lib-shared`에서 제공하는 캘린더 컴포넌트입니다.  
+**하루 또는 기간을 선택**할 때 쓰입니다. 예약·일정·필터 날짜 등 사용자가 날짜를 고르는 흐름에서 자주 사용합니다.  
+구현은 [shadcn/ui Calendar](https://ui.shadcn.com/docs/components/base/calendar)와 같이 **React DayPicker**를 기반으로 합니다.
+
+---
+
+## shadcn/ui 참고
+
+상세 설치·예제·API는 공식 문서를 참고하세요.
+
+* [Calendar — shadcn/ui](https://ui.shadcn.com/docs/components/base/calendar)
+
+**문서에서 다루는 내용 예시**
+
+* `mode`: `"single"`(하루) / `"range"`(기간) 등 선택 방식
+* `selected`, `onSelect`: 선택 상태와 변경 핸들러
+* `captionLayout="dropdown"`: 월·연도 드롭다운 네비게이션
+* `timeZone`: 선택한 날짜가 하루 밀리는 현상이 있을 때, 사용자 로컬 타임존을 넘겨 보정 ([문서의 Note](https://ui.shadcn.com/docs/components/base/calendar) 참고)
+* Date Picker와 조합하는 패턴, 셀 크기(`--cell-size`), 주차 번호(`showWeekNumber`) 등
+
+자세한 prop·동작은 [React DayPicker 문서](https://react-day-picker.js.org/)를 함께 보면 됩니다.
+
+---
+
+
+{/* ## Calendar API
+---
+아래 링크를 통해 **Calendar** 컴포넌트의 API 문서를 확인할 수 있습니다.
+
+* [Calendar 컴포넌트 API 문서](./api/calendar-api.md) */}
+
+
+
+
+## Calendar 인터랙티브 예제
+---
+<AutoHeightStorybookIframe
+  src={`${DOC_CONFIG.STORYBOOK_URL}?path=/docs/components-calendar--docs&nav=0&hideDocsToc=1`}
+  title="Calendar 인터랙티브 예제"
+  minHeight={600}
+/>
+---

@@ -98,6 +98,10 @@ const sidebars: SidebarsConfig = {
         "components/ui/badge-component",
         "components/ui/button-component",
         "components/ui/button-group-component",
+        "components/ui/calendar-component",
+        "components/ui/carousel-component",
+        "components/ui/checkbox-component",
+        "components/ui/combobox-component",
       ],
     },
     {
