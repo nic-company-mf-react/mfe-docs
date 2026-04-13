@@ -21,3 +21,4 @@ title: 'Components'
 - **[Combobox](./ui/combobox-component)** — 입력과 제안 목록으로 항목을 고르는 콤보박스 컴포넌트
 - **[Dialog](./ui/dialog-component)** — 모달 형태로 확인·알림·짧은 입력을 받는 대화상자 컴포넌트
 - **[Input](./ui/input-component)** — 폼·데이터 입력용 단일 라인 텍스트 입력 컴포넌트
+- **[Sonner](./ui/sonner-component)** — 작업 결과·오류 등을 짧게 알리는 토스트 컴포넌트
