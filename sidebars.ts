@@ -132,6 +132,7 @@ const sidebars: SidebarsConfig = {
           collapsible: true,
           items: [
             'apis/global-function/hooks/use-api',
+            'apis/global-function/hooks/use-client-state',
           ],
         },
       ],
