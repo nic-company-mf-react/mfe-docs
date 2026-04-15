@@ -120,7 +120,7 @@ shared: {
 - `i18n.init()` 완료 후 `createRoot().render()` 호출 (초기화 순서 보장)
 
 ```tsx
-import i18n from '@nic/mfe-lib-shared/i18n';
+import i18n from '@axiom/mfe-lib-shared/i18n';
 import HttpBackend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 

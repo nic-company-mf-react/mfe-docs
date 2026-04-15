@@ -18,7 +18,7 @@ hide_table_of_contents: false
 ## 임포트
 ---
 ```ts
-import { Button } from '@nic/mfe-lib-shared/components';
+import { Button } from '@axiom/mfe-lib-shared/components';
 ```
 
 

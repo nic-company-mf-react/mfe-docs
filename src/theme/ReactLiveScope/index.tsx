@@ -1,9 +1,9 @@
 import React from 'react';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@nic/mfe-lib-shared/components/ui';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@axiom/mfe-lib-shared/components/ui';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Demo Button – mfe-lib-shared가 설치되면 아래 import로 교체
-// import { Button } from '@nic/mfe-lib-shared/components';
+// import { Button } from '@axiom/mfe-lib-shared/components';
 // ─────────────────────────────────────────────────────────────────────────────
 
 type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost';

@@ -258,7 +258,7 @@ t('btn.login'); // → '로그인'
 ### `i18n.changeLanguage` — 언어 변경
 
 ```ts
-import { i18n } from '@nic/mfe-lib-shared/i18n';
+import { i18n } from '@axiom/mfe-lib-shared/i18n';
 
 await i18n.changeLanguage('en'); // 영어로 변경
 await i18n.changeLanguage('ko'); // 한국어로 변경
@@ -271,7 +271,7 @@ await i18n.changeLanguage('ko'); // 한국어로 변경
 ### `AuthBackend.invalidateCache` — 번역 캐시 수동 무효화
 
 ```ts
-import { i18n } from '@nic/mfe-lib-shared/i18n';
+import { i18n } from '@axiom/mfe-lib-shared/i18n';
 import type { AuthBackend } from './i18n/AuthBackend';
 
 const backend = i18n.services?.backendConnector?.backend as AuthBackend;

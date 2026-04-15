@@ -225,7 +225,7 @@ mfe-lib-shared/
         ```
         - `eslint.config.js` 파일을 storybook 프로젝트 루트에 생성하고 다음과 같이 설정합니다.
         ```javascript
-        import reactConfig from "@nic/mfe-lib-shared/config/eslint";
+        import reactConfig from "@axiom/mfe-lib-shared/config/eslint";
         import mdx from "eslint-plugin-mdx";
         export default [
         ...reactConfig,

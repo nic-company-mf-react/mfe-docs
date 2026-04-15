@@ -89,7 +89,7 @@ export function I18nProvider({ children, i18n = i18nDefault }: I18nProviderProps
 ```
 
 * `mfe-lib-shared/src/i18n/index.ts` (신규 생성)  
-i18n 서브패스(@nic/mfe-lib-shared/i18n)의 공개 API.
+i18n 서브패스(@axiom/mfe-lib-shared/i18n)의 공개 API.
 ```ts showLineNumbers
 export { default as i18n } from './i18n-instance';
 export { I18nProvider } from './I18nProvider';
