@@ -17,9 +17,9 @@ title: "React초기프로젝트세팅"
 :::
 :::tip <span class="admonition-title">Micro Frontend</span> 패키지 이름 명명 규칙
 * 모든 패키지 이름 예시
-    - **Host 앱**: @company/mfe-app-main
-    - **Remote 앱**: @company/mfe-app-\{업무명\} (예: @company/mf-app-shop)
-    - **공통 라이브러리**: @company/mfe-lib-shared
+    - **Host 앱**: @axiom/mfe-app-main
+    - **Remote 앱**: @axiom/mfe-app-\{업무명\} (예: @axiom/mf-app-shop)
+    - **공통 라이브러리**: @axiom/mfe-lib-shared
 * 네이밍 규칙
     - **@company**: 조직 스코프 (프로젝트에 맞게 변경)
     - **mfe**: micro frontend 약자
@@ -74,7 +74,7 @@ title: "React초기프로젝트세팅"
     - 예시
     ```json
     {
-        "name": "@company/mfe-app-main",
+        "name": "@axiom/mfe-app-main",
     }
     ```
 
@@ -86,13 +86,13 @@ title: "React초기프로젝트세팅"
 
 ## 생성한 프로젝트 확인하기
 ---
-* 최초 생성된 프로젝트에는 **의존성 라이브러리**가 설치되어 있지 않아서 **node_modules** 폴더가 없습니다. 따라서 생성한 `@company/mfe-app-main` 프로젝트의 루트 디렉토리에서 `npm install` 명령어를 실행하여 의존성 라이브러리를 설치합니다.
+* 최초 생성된 프로젝트에는 **의존성 라이브러리**가 설치되어 있지 않아서 **node_modules** 폴더가 없습니다. 따라서 생성한 `@axiom/mfe-app-main` 프로젝트의 루트 디렉토리에서 `npm install` 명령어를 실행하여 의존성 라이브러리를 설치합니다.
     ```sh
     npm install
     ```
 * 의존성 라이브러리 설치 후 폴더 구조는 다음과 같습니다.
     ```sh
-    @company/mfe-app-main/
+    @axiom/mfe-app-main/
     // highlight-start
     ├── node_modules/    # 의존성 라이브러리 설치 후 생성됨
     // highlight-end
@@ -125,12 +125,12 @@ title: "React초기프로젝트세팅"
 
 ## 공유 라이브러리 의존성 추가
 ---
-* `package.json` 파일에 **공유 라이브러리** 패키지 `@company/mfe-lib-shared` **의존성을 연결**합니다. **공유 라이브러리**는 마이크로 프론트엔드 프로젝트 전체 애플리케이션에서 공통으로 사용되는 라이브러리를 제공하는 패키지 입니다.
+* `package.json` 파일에 **공유 라이브러리** 패키지 `@axiom/mfe-lib-shared` **의존성을 연결**합니다. **공유 라이브러리**는 마이크로 프론트엔드 프로젝트 전체 애플리케이션에서 공통으로 사용되는 라이브러리를 제공하는 패키지 입니다.
     - 의존성 연결을 하기전에 **공유 라이브러리** 패키지를 `git clone` 받아야 합니다. 추후 **공유 라이브러리** 패키지가 **npm 레지스트리**에 배포되면 의존성 연결 방식을 `npm install 패키지명` 으로 설치하여 사용합니다.
     ```json
     {
         "dependencies": {
-            "@company/mfe-lib-shared": "file:../mfe-lib-shared" // 공유 라이브러리 패키지 경로
+            "@axiom/mfe-lib-shared": "file:../mfe-lib-shared" // 공유 라이브러리 패키지 경로
         }
     }
     ```
@@ -142,7 +142,7 @@ title: "React초기프로젝트세팅"
 
 ## Tailwind CSS 설치
 ---
-* `@company/mfe-app-main` 프로젝트와 함께 사용할 `@company/mfe-lib-shared` 공유 라이브러리 패키지는 모두 **Tailwind CSS**를 사용합니다. 따라서 `@company/mfe-app-main` 프로젝트에도 **Tailwind CSS**를 설치해야 합니다.
+* `@axiom/mfe-app-main` 프로젝트와 함께 사용할 `@axiom/mfe-lib-shared` 공유 라이브러리 패키지는 모두 **Tailwind CSS**를 사용합니다. 따라서 `@axiom/mfe-app-main` 프로젝트에도 **Tailwind CSS**를 설치해야 합니다.
     ```sh
     npm install -D tailwindcss @tailwindcss/vite tw-animate-css
     ```
@@ -192,9 +192,9 @@ title: "React초기프로젝트세팅"
     /* tw-animate-css 사용 시 */
     @import 'tw-animate-css';
     /* 공유 라이브러리 스타일 (나중에 추가) */
-    /* @import '@company/mfe-lib-shared/styles'; */
+    /* @import '@axiom/mfe-lib-shared/styles'; */
     /* 공유 라이브러리 컴포넌트의 Tailwind 클래스 스캔 (나중에 추가) */
-    /* @source "../node_modules/@company/mfe-lib-shared/src"; */
+    /* @source "../node_modules/@axiom/mfe-lib-shared/src"; */
     ```
 * `src/main.tsx` CSS 파일 import 경로 수정
     ```tsx
@@ -325,14 +325,14 @@ title: "React초기프로젝트세팅"
 ---
 
 
-### 1. **@company/mfe-app-main**에 **@company/mfe-lib-shared** 의존성 추가
-* `@company/mfe-app-main/package.json`의 **devDependencies**에 로컬 경로로 공유 라이브러리 패키지를 추가합니다. 이미 되어있다면 생략합니다.
+### 1. **@axiom/mfe-app-main**에 **@axiom/mfe-lib-shared** 의존성 추가
+* `@axiom/mfe-app-main/package.json`의 **devDependencies**에 로컬 경로로 공유 라이브러리 패키지를 추가합니다. 이미 되어있다면 생략합니다.
 * **공유 라이브러리**는 마이크로 프론트엔드 프로젝트 전체 애플리케이션에서 공통으로 사용되는 라이브러리를 제공하는 패키지 입니다.
     - 의존성 연결을 하기전에 **공유 라이브러리** 패키지를 `git clone` 받아야 합니다. 추후 **공유 라이브러리** 패키지가 **npm 레지스트리**에 배포되면 의존성 연결 방식을 `npm install 패키지명` 으로 설치하여 사용합니다.
     ```json
     {
         "dependencies": {
-            "@company/mfe-lib-shared": "file:../mfe-lib-shared" // 공유 라이브러리 패키지 경로
+            "@axiom/mfe-lib-shared": "file:../mfe-lib-shared" // 공유 라이브러리 패키지 경로
         }
     }
     ```
@@ -349,7 +349,7 @@ npm install --save-dev prettier eslint-config-prettier eslint-plugin-react eslin
 * 이미 프로젝트에 `eslint.config.js` 파일이 존재하므로 설정 내용을 공유 라이브러리에서 가져오도록 수정합니다.
 ```js
 import { defineConfig, globalIgnores } from 'eslint/config';
-import reactConfig from '@company/mfe-lib-shared/config/eslint/react';
+import reactConfig from '@axiom/mfe-lib-shared/config/eslint/react';
 export default defineConfig([
 	globalIgnores(['dist']),
 	...reactConfig,
@@ -359,7 +359,7 @@ export default defineConfig([
 
 ### 4. `prettier.config.js` 파일 생성
 ```js
-import sharedConfig from '@company/mfe-lib-shared/config/prettier';
+import sharedConfig from '@axiom/mfe-lib-shared/config/prettier';
 /**
  * @type {import('prettier').Config}
  */
@@ -550,7 +550,7 @@ export default defineConfig({
   - 이 파일은 **react-router**의 **createHashRouter** 또는 **createBrowserRouter** 함수를 통해 **router** 인스턴스를 생성하고, **$router** 객체를 구현한 파일입니다.
   ```ts showLineNumbers
   import { createHashRouter, type DOMRouterOpts } from 'react-router';
-  import type { TAppRoute } from '@company/mfe-lib-shared/types';
+  import type { TAppRoute } from '@axiom/mfe-lib-shared/types';
 
   export const createAppRouter = (routes: TAppRoute[], opts?: DOMRouterOpts) => {
     // createBrowserRouter는 서버 설정이 필요 (모든 경로를 index.html로 리다이렉트)하기 때문에 사용하지 않는다.
@@ -566,7 +566,7 @@ export default defineConfig({
   - `import MainRouter from '@/domains/main/router';` 이와같이 현재는 **main** 업무가 없기 때문에 다음 스탭의 업무 추가 하면서 생성합니다.
   - `import RootLayout from '@/shared/components/layout/RootLayout';` 이와같이 현재는 **루트 레이아웃**이 없기 때문에 다음 스탭에서 추가합니다.
   ```ts showLineNumbers
-  import type { TAppRoute } from '@company/mfe-lib-shared/types';
+  import type { TAppRoute } from '@axiom/mfe-lib-shared/types';
 
   // root layout 가져오기 -----------
   import RootLayout from '@/shared/components/layout/RootLayout';
@@ -673,7 +673,7 @@ export default defineConfig({
   ```
 * `src/domains/main/router/index.tsx` 파일이 없기 때문에 신규 생성합니다.
   ```tsx showLineNumbers
-  import type { TAppRoute } from '@company/mfe-lib-shared/types';
+  import type { TAppRoute } from '@axiom/mfe-lib-shared/types';
 
   // 메인화면 컴포넌트 가져오기
   import MainIndex from '../pages/MainIndex';
@@ -777,7 +777,7 @@ VITE_REMOTE_RETIREMENT_URL=http://localhost:5004/retirementPensionEntry.js
 
 
 
-## 공유 라이브러리(`@company/mfe-lib-shared`) 연동 관련
+## 공유 라이브러리(`@axiom/mfe-lib-shared`) 연동 관련
 ---
 * 공유 라이브러리를 GitHub/GitLab 등에 올린 경우 npm install을 통해 공유 라이브러리 git을 설치할 수 있습니다.  
   ```sh
@@ -787,20 +787,20 @@ VITE_REMOTE_RETIREMENT_URL=http://localhost:5004/retirementPensionEntry.js
   ```json
   // package.json
   "dependencies": {
-    "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git"
+    "@axiom/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git"
   }
   ```
   - host 앱과 remote 앱이 각자 배포 시점에 다른 커밋을 참조할 수 있으므로 좀 더 안정적인 설치 배포 방식은 커밋 해시로 버전 고정하는 것이 권장됩니다.
     ```json
     "dependencies": {
-      "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#commit-hash"
-      // 또는 "@company/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#v1.0.0"
+      "@axiom/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#commit-hash"
+      // 또는 "@axiom/mfe-lib-shared": "git+https://github.com/nic-company/mf-lib-shared.git#v1.0.0"
     }
     ```
 * 공유 라이브러리가 아직 npm에 배포되기 전이면, `file:` 경로 또는 git 링크로 연결할 수 있습니다.
   ```json
   "dependencies": {
-    "@company/mfe-lib-shared": "file:../mfe-lib-shared"
+    "@axiom/mfe-lib-shared": "file:../mfe-lib-shared"
   }
   ```
 
@@ -816,7 +816,7 @@ VITE_REMOTE_RETIREMENT_URL=http://localhost:5004/retirementPensionEntry.js
   ```
   ```json
   // package.json
-  "@company/mfe-lib-shared": "^1.0.0"  // 진짜 semver 사용 가능
+  "@axiom/mfe-lib-shared": "^1.0.0"  // 진짜 semver 사용 가능
   ```
   &#8251; 인터넷 연결 없는 폐쇄망 환경이라면
   사내 프라이빗 레지스트리 운영(완전 독립)
@@ -826,7 +826,7 @@ VITE_REMOTE_RETIREMENT_URL=http://localhost:5004/retirementPensionEntry.js
   ```css
   @import "tailwindcss";
   /* 공유 라이브러리의 빌드 결과물로 가져오려면 src를 dist로 변경해야한다. */
-  @source "../../node_modules/@company/mfe-lib-shared/src/**/*.{ts,tsx}";
+  @source "../../node_modules/@axiom/mfe-lib-shared/src/**/*.{ts,tsx}";
   ```
 
 

@@ -34,7 +34,7 @@ title: "REST API 데이터 활용하기"
 * 화면 컴포넌트가 마운트되면 **useApi()** 함수가 자동으로 요청을 실행합니다.
 ```tsx
 // highlight-start
-import { useApi } from '@company/mfe-lib-shared/hooks';
+import { useApi } from '@axiom/mfe-lib-shared/hooks';
 // highlight-end
 
 interface IPost {
@@ -58,7 +58,7 @@ export default function SampleComponent(): React.ReactNode {
 }
 ```
 :::info 설명
-* `useApi()` 훅 함수를 공유 라이브러리(`@company/mfe-lib-shared/hooks`)에서 임포트 합니다.
+* `useApi()` 훅 함수를 공유 라이브러리(`@axiom/mfe-lib-shared/hooks`)에서 임포트 합니다.
 * `useApi()` 함수를 화면 컴포넌트 최 상단에 선언하면 화면 컴포넌트가 마운트되면서 자동으로 요청을 실행합니다.
 * `useApi()` 함수의 첫 번째 인자로 **REST API URL**을 전달합니다.
 * `useApi()` 함수의 결과 데이터는 `data` 속성에 담겨서 반환됩니다. `data` 속성을 통해 response 데이터를 활용할 수 있습니다.
@@ -104,7 +104,7 @@ export default function SampleComponent(): React.ReactNode {
 * `params` 옵션을 사용하여 쿼리스트링을 전달할 수 있습니다.
 ```tsx
 // highlight-start
-import { useApi } from '@company/mfe-lib-shared/hooks';
+import { useApi } from '@axiom/mfe-lib-shared/hooks';
 // highlight-end
 
 interface IPost {

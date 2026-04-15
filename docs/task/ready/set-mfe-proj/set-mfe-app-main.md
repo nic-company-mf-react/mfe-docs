@@ -176,7 +176,7 @@ title: "mfe-app-main 환경구성"
 * `$router` 객체는 공유 라이브러리인 `mfe-lib-shared`에 이미 구현되어 있습니다. 따라서 Host 앱(**mfe-app-main**)에서는 공유 라이브러리에서 제공하는 `$router` 객체를 등록하여 바로 사용할 수 있습니다.
     - **mfe-app-main** 앱는 **react-router** 라이브러리를 최초 등록되는 Provider 가 있습니다. 이 Provider를 등록하는 파일 `src/core/router/index.ts` 파일에 다음과 같이 `$router` 객체를 등록합니다.
     ```ts
-    import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
+    import { registerWindowRouter } from '@axiom/mfe-lib-shared/utils';
 
     registerWindowRouter(router);
     ```

@@ -2368,13 +2368,13 @@ export default function ButtonPage(): ReactNode {
   ```
 
 * **`$router` 공유 메인 엔트리에 export 추가**
-  - `mfe-lib-shared/src/index.ts` 파일에 각 애플리케이션에서 사용할 `$router` 객체를 등록합니다. (사용예시: `import { createWindowRouter, registerWindowRouter } from '@company/mfe-lib-shared';`)
+  - `mfe-lib-shared/src/index.ts` 파일에 각 애플리케이션에서 사용할 `$router` 객체를 등록합니다. (사용예시: `import { createWindowRouter, registerWindowRouter } from '@axiom/mfe-lib-shared';`)
   ```ts
   // ── 라우터 ──
   export { createWindowRouter, registerWindowRouter } from './utils/router'; // ← export 추가
   ```
 * **`mfe-lib-shared/src/utils/index.ts` 파일에 utils 서브패스 진입점 추가**
-  - `mfe-lib-shared/src/utils/index.ts` 파일에 utils 서브패스 진입점으로 모든 함수를 여기에 계속 등록합니다.(사용예시: `import { createWindowRouter, registerWindowRouter } from '@company/mfe-lib-shared/utils';`)
+  - `mfe-lib-shared/src/utils/index.ts` 파일에 utils 서브패스 진입점으로 모든 함수를 여기에 계속 등록합니다.(사용예시: `import { createWindowRouter, registerWindowRouter } from '@axiom/mfe-lib-shared/utils';`)
   ```ts
   export { createWindowRouter, registerWindowRouter } from './router';
   // 향후 추가 예시
@@ -2415,7 +2415,7 @@ export default function ButtonPage(): ReactNode {
   ```
 * 각 애플리케이션에서는 다음과 같이 `$router` 객체를 각각 등록합니다.
   ```ts
-  import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
+  import { registerWindowRouter } from '@axiom/mfe-lib-shared/utils';
 
   // 각 애플리케이션션이 window.$router를 등록 (모든 remote 앱은 개발 시에만 사용할 수 있도록 등록)
   registerWindowRouter(router);

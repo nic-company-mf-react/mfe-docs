@@ -33,9 +33,9 @@
   <!-- ===================== SECTION A: Description ===================== -->
   <rect x="132" y="138" width="636" height="86" fill="#fff9f5" rx="8" stroke="#fab38766" stroke-width="1.5"/>
   <text x="150" y="158" font-size="15" font-weight="bold" fill="#1e2030">Button</text>
-  <text x="150" y="175" font-size="10.5" fill="#495057">`@company/mfe-lib-shared`&#xC5D0;&#xC11C; &#xC81C;&#xACF5;&#xD558;&#xB294; `Button` &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xC785;&#xB2C8;&#xB2E4;.</text>
+  <text x="150" y="175" font-size="10.5" fill="#495057">`@axiom/mfe-lib-shared`&#xC5D0;&#xC11C; &#xC81C;&#xACF5;&#xD558;&#xB294; `Button` &#xCEF4;&#xD3EC;&#xB10C;&#xD2B8;&#xC785;&#xB2C8;&#xB2E4;.</text>
   <text x="150" y="193" font-size="10" fill="#6c757d">### &#xC784;&#xD3EC;&#xD2B8;</text>
-  <text x="150" y="208" font-size="9.5" fill="#868e96" font-family="monospace">import { Button } from '@company/mfe-lib-shared/components/ui';</text>
+  <text x="150" y="208" font-size="9.5" fill="#868e96" font-family="monospace">import { Button } from '@axiom/mfe-lib-shared/components/ui';</text>
 
   <!-- Section A top bar accent -->
   <rect x="132" y="138" width="636" height="4" fill="#fab387" rx="8"/>

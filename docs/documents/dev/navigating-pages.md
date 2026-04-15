@@ -53,7 +53,7 @@ src
 
 * **계좌메인화면(AccountIndex.tsx)** 페이지에서 **계좌이용내역화면(UsageHistory.tsx)** 페이지로 이동하는 작업을 진행해 봅니다.
   ```tsx
-  import { Button } from '@company/mfe-lib-shared/components/ui';
+  import { Button } from '@axiom/mfe-lib-shared/components/ui';
 
   export default function AccountIndex() {
     return (
@@ -93,7 +93,7 @@ src
 ---
 * `$router.back()` 함수는 **히스토리 스택**에서 이전 페이지로 이동합니다.
   ```tsx
-  import { Button } from '@company/mfe-lib-shared/components/ui';
+  import { Button } from '@axiom/mfe-lib-shared/components/ui';
 
   export default function AccountIndex() {
     return (

@@ -121,7 +121,7 @@ title: "mfe-app-remote1 환경구성"
 * `$router` 객체는 공유 라이브러리인 `mfe-lib-shared`에 이미 구현되어 있습니다. 따라서 Remote 앱(**mfe-app-remote1**)에서는 공유 라이브러리에서 제공하는 `$router` 객체를 등록하여 바로 사용할 수 있습니다.
     - **mfe-app-remote1** 앱은은 **react-router** 라이브러리를 최초 등록되는 Provider 가 있습니다. 이 Provider를 등록하는 파일 `src/core/router/index.ts` 파일에 다음과 같이 `$router` 객체를 등록합니다. 참고로 이 파일은 개발 시에만 사용되는 라우터 Provider 입니다. 실제 운영 시에는 Host앱에서 등록된 Provider를 사용합니다.
     ```ts
-    import { registerWindowRouter } from '@company/mfe-lib-shared/utils';
+    import { registerWindowRouter } from '@axiom/mfe-lib-shared/utils';
 
     // standalone 실행 시에만 등록
     if (typeof window !== 'undefined' && !window.$router) {

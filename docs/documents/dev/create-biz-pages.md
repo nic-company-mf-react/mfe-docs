@@ -131,7 +131,7 @@ export default function AccountIndex({}: IAccountIndexProps): React.ReactNode {
 :::
 * `src/domains/account/router/index.tsx` 파일 작업
 ```typescript showLineNumbers
-import type { TAppRoute } from '@company/mfe-lib-shared/types';
+import type { TAppRoute } from '@axiom/mfe-lib-shared/types';
 import loadable from '@loadable/component';
 
 // 라우터에 연결할 페이지를 import 한다.

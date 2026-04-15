@@ -402,7 +402,7 @@ const meta = {
     docs: {
       description: {
         component: `
-\`Button\` 컴포넌트는 \`@company/mfe-lib-shared\` 에서 제공하는 기본 버튼 UI입니다.
+\`Button\` 컴포넌트는 \`@axiom/mfe-lib-shared\` 에서 제공하는 기본 버튼 UI입니다.
 // ...
         `,
       },
