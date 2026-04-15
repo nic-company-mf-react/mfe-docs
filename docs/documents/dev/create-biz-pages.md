@@ -151,7 +151,7 @@ export default routes;
 :star: account업무의 **router/index.tsx** 파일 작업이 완료 되면 해당 업무 라우터를 전체 router에도 연결 해줘야 합니다.
 * **src/shared/router/index.tsx**파일에 **추가된 account 업무 라우터**를 연결합니다.
   ```tsx showLineNumbers
-  import type { TAppRoute } from '@rm/monorepo-mf-shared-library/types';
+  import type { TAppRoute } from '@axiom/mfe-mf-shared-library/types';
   
   // root layout 가져오기 -----------
   import RootLayout from '@/shared/components/layout/RootLayout';

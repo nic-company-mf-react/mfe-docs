@@ -15,7 +15,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/app_documents.svg').default,
     description: (
       <>
-        @rm/mf-boilerplate를 활용한 프론트엔드 개발 시 초기 세팅 방법, 개발 규칙, 코딩 컨벤션 가이드뿐만 아니라 다양한 업무 개발 방법과 체계적인 작성 가이드를 제공합니다.
+        @axiom/mf-boilerplate를 활용한 프론트엔드 개발 시 초기 세팅 방법, 개발 규칙, 코딩 컨벤션 가이드뿐만 아니라 다양한 업무 개발 방법과 체계적인 작성 가이드를 제공합니다.
       </>
     ),
   },
@@ -33,7 +33,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/api_reference.svg').default,
     description: (
       <>
-        @rm/mf-boilerplate에서 제공하는 공통함수, 객체 등과 유틸 함수들의 상세한 API 문서를 제공합니다.
+        @axiom/mf-boilerplate에서 제공하는 공통함수, 객체 등과 유틸 함수들의 상세한 API 문서를 제공합니다.
       </>
     ),
   },

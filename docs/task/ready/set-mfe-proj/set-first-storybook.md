@@ -378,7 +378,7 @@ stories/
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { Button } from "@rm/monorepo-mf-shared-library/components/ui";
+import { Button } from "@axiom/mfe-lib-shared/components/ui";
 import React from "react";
 ```
 :::tip 설명
