@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 displayed_sidebar: "startDocSidebar"
-title: "SEO 최적화"
+title: "SEO 최적화(작업중)"
 ---
 
-# SEO 최적화 (CSR 환경)
+# SEO 최적화 (CSR 환경)(작업중)
 
 
 

@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
 displayed_sidebar: "startDocSidebar"
-title: "React 컴포넌트 문서화"
+title: "React 컴포넌트 문서화(작업중)"
 ---
 
-# React 컴포넌트 문서화
+# React 컴포넌트 문서화(작업중)
 
 React 컴포넌트 문서화 + 테스트 + 렌더링 검증 도구
 

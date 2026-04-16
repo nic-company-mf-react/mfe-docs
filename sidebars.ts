@@ -55,24 +55,24 @@ const sidebars: SidebarsConfig = {
         "documents/dev/using-ui-component",
         "documents/dev/create-domain-common-function",
         "documents/dev/set-i18n-project",
-        {
-          type: 'category',
-          label: '• Form 전송 방법',
-          collapsed: true,
-          collapsible: true,
-          items: [
-            'documents/index',
-          ],
-        },
-        {
-          type: 'category',
-          label: '• Dialog 띄우기',
-          collapsed: true,
-          collapsible: true,
-          items: [
-            'documents/index',
-          ],
-        },
+        // {
+        //   type: 'category',
+        //   label: '• Form 전송 방법',
+        //   collapsed: true,
+        //   collapsible: true,
+        //   items: [
+        //     'documents/index',
+        //   ],
+        // },
+        // {
+        //   type: 'category',
+        //   label: '• Dialog 띄우기',
+        //   collapsed: true,
+        //   collapsible: true,
+        //   items: [
+        //     'documents/index',
+        //   ],
+        // },
       ],
     },
     {
@@ -105,15 +105,6 @@ const sidebars: SidebarsConfig = {
         "components/ui/dialog-component",
         "components/ui/input-component",
         "components/ui/sonner-component",
-      ],
-    },
-    {
-      type: "category",
-      label: "◉ UI Component API",
-      collapsed: false,
-      collapsible: true,
-      items: [
-        "components/ui/api/button-api",
       ],
     },
   ],
