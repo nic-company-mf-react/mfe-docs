@@ -285,7 +285,11 @@ title: "React초기프로젝트세팅"
   "[mdx]": {
     "editor.formatOnSave": false,
     "editor.defaultFormatter": null
-  }
+  },
+  "update.mode": "none",
+  "telemetry.telemetryLevel": "off",
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false
 }
 ```
 
@@ -311,6 +315,13 @@ title: "React초기프로젝트세팅"
 - **"less.lint.unknownAtRules": "ignore"** : VSCode에서 less의 "Unknown At Rules" 경고를 무시하도록 설정.
 - **"[markdown]":** : Markdown 파일을 편집할 때 자동으로 코드 서식을 정리하지 않도록 설정.
 - **"[mdx]":** : MDX 파일을 편집할 때 자동으로 코드 서식을 정리하지 않도록 설정.
+- **오프라인일경우 설정 추가함**
+  ```json
+  "update.mode": "none",
+  "telemetry.telemetryLevel": "off",
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false
+  ```
 :::
 
 
