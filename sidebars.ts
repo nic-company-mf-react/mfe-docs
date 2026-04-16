@@ -130,7 +130,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '◉ Service Objects',
+      label: '◉ Service Objects(작업중)',
       collapsed: false,
       collapsible: true,
       items: [
