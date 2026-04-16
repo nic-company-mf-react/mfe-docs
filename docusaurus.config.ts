@@ -119,7 +119,7 @@ const config: Config = {
           sidebarId: 'taskDocSidebar',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/orgs/nic-company-mf-react/repositories',
           label: 'GitHub',
           position: 'right',
         },
