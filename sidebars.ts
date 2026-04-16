@@ -128,6 +128,36 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: '◉ Service Objects',
+      collapsed: false,
+      collapsible: true,
+      items: [
+        {
+          type: 'category',
+          label: '• $ui',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            'apis/service-objects/ui/alert-ui',
+            'apis/service-objects/ui/confirm-ui',
+            'apis/service-objects/ui/dialog-ui',
+          ],
+        },
+        {
+          type: 'category',
+          label: '• $util',
+          collapsed: false,
+          collapsible: true,
+          items: [
+            'apis/service-objects/util/date-util',
+            'apis/service-objects/util/number-util',
+            'apis/service-objects/util/string-util',
+          ],
+        },
+      ],
+    },
   ],
   taskDocSidebar: [
     'task/intro',
